@@ -1,9 +1,7 @@
-This readme is a test file to try and push to the repo.
+Welcome to the Team Deneb README for the AUTOGRADER Assignment.
 
-I cloned the repo from gitea, and if this appears in the repo, I was able to push back into it.
+As of right now, we don't have Docker working, so to compile and run the server that we have now, enter:
 
+python3 manage.py runserver
 
-James Malone
-
-
-hehe xD
+then in your browser, navigate to "localhost:8000/"
