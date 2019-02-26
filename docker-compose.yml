@@ -31,10 +31,10 @@ services:
     volumes:
       - $PWD/db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=django
-      - MYSQL_USER=django
-      - MYSQL_PASSWORD=django
-      - MYSQL_DATABASE=djangodocker_db
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     user: ${HOST_USER_ID}:${HOST_GROUP_ID}
     container_name: "mysql_${HOST_USER_ID}_${HOST_GROUP_ID}"
     networks:
