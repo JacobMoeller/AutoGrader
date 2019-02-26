@@ -15,12 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY','Value stored in env file.')
+SECRET_KEY = os.getenv('SECRET_KEY','<See README:CONFIG>')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,13 +73,12 @@ WSGI_APPLICATION = 'autograder.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'djangodocker_db',
-    'USER': 'django',
-    'PASSWORD': 'django',
+    'NAME': os.getenv('MYSQL_DATABASE','<See README:NOTES>'),
+    'USER': os.getenv('MYSQL_USER','<See README:NOTES>'),
+    'PASSWORD': os.getenv('MYSQL_PASSWORD','<See README:NOTES>'),
     'HOST': 'db',
     'PORT': '3306',
   }

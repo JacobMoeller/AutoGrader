@@ -14,8 +14,13 @@ services:
   django:
     restart: always
     build: ./docker/django/
+    image: deneb_django
     volumes:
       - $PWD:/usr/src/app
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - $DJANGO_PORT:8000
     user: ${HOST_USER_ID}:${HOST_GROUP_ID}
@@ -28,6 +33,7 @@ services:
 
   db:
     build: ./docker/mysql/
+    image: deneb_db
     volumes:
       - $PWD/db:/var/lib/mysql
     environment:

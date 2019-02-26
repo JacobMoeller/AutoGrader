@@ -1,9 +1,14 @@
-# Environmental file
-.env
+# Django-specific
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+media
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 
 # C extensions
@@ -117,3 +122,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Environmental file
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/

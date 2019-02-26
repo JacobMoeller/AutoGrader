@@ -1,0 +1,29 @@
+##################
+# SET-UP         #
+##################
+To avoid prefacing your commands in a specific instance, specify environmental
+variables to be used by docker-compose with the following:
+    $ export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
+    $ DJANGO_PORT=8888
+
+
+These won't persist after this shell has been closed; this can be permanently
+configured by modifying .bashrc with the command below:
+    $ echo "export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
+    $ DJANGO_PORT=8888" >> ~/.bashrc
+
+-----
+To modify any values temporarily, e.g. DJANGO_PORT, simply use:
+    $ DJANGO_PORT = 2525
+
+Notice this will not change your value in ~/.bashrc.
+
+-----
+IMPORTANT: If you exclude the shell var args, an image may be created with
+missing configuration information.
+
+If so, find the offending image id with:
+    $ docker images
+
+Remove with:
+    $ docker rmi <IMAGE_ID>

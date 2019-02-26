@@ -1,4 +1,0 @@
-#!/bin/sh
-HOST_GROUP_ID=$1
-HOST_USER_ID=$2
-DJANGO_PORT=$3
