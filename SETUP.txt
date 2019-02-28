@@ -1,29 +1,61 @@
-##################
-# SET-UP         #
-##################
-To avoid prefacing your commands in a specific instance, specify environmental
-variables to be used by docker-compose with the following:
-    $ export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
-    $ DJANGO_PORT=8888
+################################################################################
+# SETTING UP ENVIRONMENTAL VARIABLES FOR DOCKER-COMPOSE         
+################################################################################
+On Linux(or with Git Bash on Windows):
+	To avoid prefacing your commands in a specific instance, specify 
+	environmentalvariables to be used by docker-compose with the following:
+	    $ export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
+	    $ DJANGO_PORT=8888
 
+Notice these won't persist after this shell has been closed. 
 
-These won't persist after this shell has been closed; this can be permanently
-configured by modifying .bashrc with the command below:
+On Linux:
+	This can be permanently configured by modifying .bashrc with the following:
     $ echo "export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
     $ DJANGO_PORT=8888" >> ~/.bashrc
 
------
-To modify any values temporarily, e.g. DJANGO_PORT, simply use:
-    $ DJANGO_PORT = 2525
+On Windows: 
+	These can be added through System Properties > Advanced > Environmental 
+	Variables, under User variables with "New...". 
 
-Notice this will not change your value in ~/.bashrc.
+	Alternatively you can directly set environmental variables using any 
+	terminal, as below.
+	    > id --user
+	    > SETX HOST_USER_ID <result from id --user>
+	    > id --group
+	    > SETX HOST_GROUP_ID <result from id --group>
+	    > SETX DJANGO_PORT 8888
 
------
+################################################################################
+# CHECKING/CHANGING THE VALUES
+################################################################################
+On Linux(or with Git Bash on Windows):
+	Individual variables can be found using:
+		$ echo $VAR_NAME
+
+	To modify any values temporarily, e.g. DJANGO_PORT, simply use:
+	    $ DJANGO_PORT = 2525
+
+On Windows:
+	Searching for values by a matching pattern can be done by:
+		$> printenv | grep <pattern>
+	e.g. `printenv | grep HOST` will output HOST_USER_ID and HOST_GROUP_ID.
+
+	To modify any values temporarily, e.g. DJANGO_PORT, simply use:
+	    > SET DJANGO_PORT = 2525
+
+Notice changing values this way does not modify the persistent ones in ~/.bashrc
+in Linux or System Properties in Windows.
+
+################################################################################
+# DOCKER BUILD - MISSING VALUES
+################################################################################
 IMPORTANT: If you exclude the shell var args, an image may be created with
-missing configuration information.
+missing configuration information. Docker will usually note not finding 
+a value for a given variable by substituting with an empty string.
 
 If so, find the offending image id with:
-    $ docker images
+    $> docker images
 
 Remove with:
-    $ docker rmi <IMAGE_ID>
+    $> docker rmi <IMAGE_ID>
