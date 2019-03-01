@@ -1,7 +1,19 @@
+# BASE COMPOSE FILE
+# Extracts database values into .env file for production.
+#
 # Docker Compose file for launching Django connected to a MySQL server
 # running in a separate container. The Docker images are described in
 # the docker/ folder below here and the database data is stored in
 # db/, the Django application stored starting here.
+#
+# DJANGO PORT must always be specified. Configure (with SETUP.txt) or pass in
+# with shell variable.
+# Dependent on .env file (not available in git repository).
+#
+# In production mode on linux:
+#   $ docker-compose up
+# To run on lab machines in production mode (requires env vars, see SETUP):
+#   $ docker-compose -f docker-compose.yml -f docker-compose.lab.yml config
 version: "2"
 
 networks:
@@ -23,8 +35,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - $DJANGO_PORT:8000
-    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
-    container_name: "django_${HOST_USER_ID}_${HOST_GROUP_ID}"
+    container_name: "django_prod"
     networks:
       # Join the infrastructure network
       - infrastructure
@@ -41,8 +52,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
-    container_name: "mysql_${HOST_USER_ID}_${HOST_GROUP_ID}"
+    container_name: "mysql_prod"
     networks:
-      # Add the db server to the infrastructure network
+      # Join the infrastructure network
       - infrastructure

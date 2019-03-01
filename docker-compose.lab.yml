@@ -1,0 +1,20 @@
+# LAB SPECIFIC COMPOSE FILE, ADDS USER CONTEXT TO CONTAINERS.
+#  Separated to prevent cross platform issues with Mac OS and Windows.
+#
+# Always use when running in lab.
+# (For 'production' version):
+#     $ docker-compose -f docker-compose.yml -f docker-compose.lab.yml up
+# (For development version):
+#     $ docker-compose -f docker-compose.yml -f docker-compose.override.yml /
+#     $ -f docker-compose.lab.yml up
+# See SETUP for more details.
+
+version: "2"
+services:
+  django:
+    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    container_name: "django_${HOST_USER_ID}_${HOST_GROUP_ID}"
+
+  db:
+    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    container_name: "mysql_${HOST_USER_ID}_${HOST_GROUP_ID}"

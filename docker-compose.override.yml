@@ -1,0 +1,24 @@
+# DEVELOPMENT SPECIFIC COMPOSE FILE. AVOIDS .ENV REFERENCING.
+#
+# Separated to ease development since .env is ignored with .gitignore.
+# Includes hard-coded database information. Port must still be specified.
+#
+# If running on home machine (e.g. Windows, Mac) not configured for UID, GID:
+# 
+version: "2"
+
+services:
+  django:
+    environment:
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_DATABASE=djangodocker_db
+    container_name: "django_dev"
+
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=django
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_DATABASE=djangodocker_db
+    container_name: "mysql_dev"

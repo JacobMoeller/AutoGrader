@@ -1,25 +1,27 @@
 ################################################################################
-# SETTING UP ENVIRONMENTAL VARIABLES FOR DOCKER-COMPOSE         
+# SETTING UP ENVIRONMENTAL VARIABLES FOR DOCKER-COMPOSE
 ################################################################################
 On Linux(or with Git Bash on Windows):
-	To avoid prefacing your commands in a specific instance, specify 
+	To avoid prefacing your commands in a specific instance, specify
 	environmentalvariables to be used by docker-compose with the following:
 	    $ export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
 	    $ DJANGO_PORT=8888
 
-Notice these won't persist after this shell has been closed. 
+Notice these won't persist after this shell has been closed.
 
 On Linux:
 	This can be permanently configured by modifying .bashrc with the following:
-    $ echo "export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` \
+    $ echo "export HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group`
     $ DJANGO_PORT=8888" >> ~/.bashrc
 
-On Windows: 
-	These can be added through System Properties > Advanced > Environmental 
-	Variables, under User variables with "New...". 
+On Windows:
+	These can be added through System Properties > Advanced > Environmental
+	Variables, under User variables with "New..." by hand.
 
-	Alternatively you can directly set environmental variables using any 
+	Alternatively you can directly set environmental variables using any
 	terminal, as below.
+	Note: id --user and id --group are not natively supported. Requires adding
+	support for bash commands (e.g. via Git Bash)
 	    > id --user
 	    > SETX HOST_USER_ID <result from id --user>
 	    > id --group
@@ -33,16 +35,18 @@ On Linux(or with Git Bash on Windows):
 	Individual variables can be found using:
 		$ echo $VAR_NAME
 
-	To modify any values temporarily, e.g. DJANGO_PORT, simply use:
-	    $ DJANGO_PORT = 2525
+	To modify any values *temporarily*, e.g. DJANGO_PORT, simply use:
+	  $ DJANGO_PORT = 2525
 
-On Windows:
+-----
+
+On Windows, if bash commands are supported:
 	Searching for values by a matching pattern can be done by:
 		$> printenv | grep <pattern>
 	e.g. `printenv | grep HOST` will output HOST_USER_ID and HOST_GROUP_ID.
 
-	To modify any values temporarily, e.g. DJANGO_PORT, simply use:
-	    > SET DJANGO_PORT = 2525
+	To modify any values *temporarily*, e.g. DJANGO_PORT, simply use:
+		> SET DJANGO_PORT = 2525
 
 Notice changing values this way does not modify the persistent ones in ~/.bashrc
 in Linux or System Properties in Windows.
@@ -51,7 +55,7 @@ in Linux or System Properties in Windows.
 # DOCKER BUILD - MISSING VALUES
 ################################################################################
 IMPORTANT: If you exclude the shell var args, an image may be created with
-missing configuration information. Docker will usually note not finding 
+missing configuration information. Docker will usually note not finding
 a value for a given variable by substituting with an empty string.
 
 If so, find the offending image id with:
@@ -59,3 +63,52 @@ If so, find the offending image id with:
 
 Remove with:
     $> docker rmi <IMAGE_ID>
+
+################################################################################
+# DOCKER COMPOSE - DIFFERENT CONFIGURATIONS
+################################################################################
+Docker-compose can change the build parameters by specifying select files or
+overrides which may help run it on different operating systems.
+
+These must be run in addition to the base compose file,
+			e.g. "docker-compose -f <base_compose> -f <config_compose> <command>"
+
+The order supplied matters; last provided file will override any shared values,
+such as container_name.
+
+All require supplying DJANGO_PORT somehow to work. No default value is given.
+
+	Lab specific compose-file: docker-compose.lab.yml
+		- Requires specifying HOST_USER_ID, GROUP_USER_ID. See above.
+		- Container names of the form 'django_####_####', 'mysql_####_####'
+
+		- If using development, please run as:
+				$ docker-compose -f docker-compose.yml -f docker-compose.override.yml \
+				$ -f docker-compose.lab.yml <command>
+
+			# OPTIONAL ALIASING FOR EASIER WORKFLOW #
+			On Linux you can alias this command if desired using:
+				$ echo "alias lab-dev-compose='docker-compose -f docker-compose.yml -f
+				$ docker-compose.override.yml -f docker-compose.lab.yml'" \
+				$ >> ~/.bash_aliases && source ~/.bash_aliases
+
+	Development specific compose-file: docker-compose.override.yml
+		- Must be used in addition to base docker-compose file to override, e.g.
+				$ docker-compose -f docker-compose.yml -f docker-compose.override.yml
+		- Container names of the form 'django_dev', 'mysql_dev'
+
+			# OPTIONAL ALIASING FOR EASIER WORKFLOW #
+			Alias command for home-use using:
+				$ echo "alias dev-compose='docker-compose -f docker-compose.yml -f
+				$ docker-compose.override.yml'" >> ~/.bash_aliases && \
+				$ source ~/.bash_aliases
+
+	Base/production specific compose-file: docker-compose.yml
+		- Can run standalone with only:
+			$ docker-compose <command>
+		- NOTE: On lab machines you need "-f docker-compose.lab.yml" and in all
+			cases it requires having the .env file.
+
+Before using `build` or `up`, you can use the `config` command to check your
+settings. `docker-compose down` will work in all cases to stop and closed
+containers.
