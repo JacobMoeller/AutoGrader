@@ -10,22 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os
+import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY','<See README:CONFIG>')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'a-ac#o7=!ex9hb6h@4+d_z(9n-$$wle*#+a*7x5ma+cx_dvng2h'
 
+if DEBUG is False:
+    SECRET_KEY = os.environ('SECRET_KEY') 
+
+# SECURITY WARNING: not for production; changed for Windows configs
+ALLOWED_HOSTS = ['*']
+
+if DEBUG is False:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -70,22 +75,42 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'autograder.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': os.getenv('MYSQL_DATABASE','<See README:NOTES>'),
-    'USER': os.getenv('MYSQL_USER','<See README:NOTES>'),
-    'PASSWORD': os.getenv('MYSQL_PASSWORD','<See README:NOTES>'),
+    'NAME': 'djangodocker_db',
+    'USER': 'django',
+    'PASSWORD': 'django',
     'HOST': 'db',
     'PORT': '3306',
+    'TEST': {
+        'NAME': 'test_djangodocker_db',
+        },
   }
 }
 
+# Gross dev workaround. Needs to be checked with mysql for
+# thorough testing before being pushed into main repo.
+DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 
+if 'test' in sys.argv and DEBUG is True:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES['default']['TEST']['NAME'] = '/dev/shm/autograder.test.db.sqlite3'
+elif DEBUG is False:
+    DATABASES['default']['TEST']['NAME'] = '/dev/shm/autograder.test.db.mysql'
 
+if DEBUG is False:
+    DATABASES = {
+      'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ('MYSQL_DATABASE'),
+        'USER': os.environ('MYSQL_USER'),
+        'PASSWORD': os.environ('MYSQL_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '3306',
+      }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 

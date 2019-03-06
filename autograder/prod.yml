@@ -1,0 +1,53 @@
+# PRODUCTION COMPOSE FILE
+# Extracts database values into .env file for production.
+#
+# DJANGO PORT must always be specified. Configure (with SETUP.txt) or pass in
+# through shell.
+# NOTE: Dependent on .env file (not available in git repository).
+#
+# To build an image in production mode:
+#   $ docker-compose -f prod.yml build
+# (To use in lab, append `-f lab.yml` as well before the build command.)
+version: "2.1"
+
+networks:
+  # Construct a private network for the Django server and
+  # database server to communicate on
+  infrastructure:
+    external: false
+
+services:
+  django:
+    restart: always
+    build: ./docker/django/
+    image: django:prod
+    volumes:
+      - ${PWD}:/usr/src/app
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - SECRET_KEY
+    ports:
+      - 8080:8000
+    container_name: "django"
+    networks:
+      # Join the infrastructure network
+      - infrastructure
+    depends_on:
+      - db
+ 
+  db:
+    build: ./docker/mysql/
+    image: mysql:prod
+    volumes:
+      - ${PWD}/db:/var/lib/mysql # should be different?
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+    container_name: "mysql"
+    networks:
+      # Join the infrastructure network
+      - infrastructure
