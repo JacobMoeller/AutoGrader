@@ -44,6 +44,3 @@ services:
     networks:
       # Join the infrastructure network
       - infrastructure
-    ports:
-      - 3306:3306 # allows direct access to db via shell
-
