@@ -7,12 +7,10 @@ class InviteModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
-                                instructor_username = 'Ryan Murphy')
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering')
         Invite.objects.create(invite_id = 1, course_id = Courses.objects.get(course_id=1), 
                               sender_username = 'durhams199',
-                              rec_username = 'rwilliam122',
-                              level_of_invite = 'instructor')
+                              rec_username = 'rwilliam122')
 
     def test_sender_username_label(self):
         invite = Invite.objects.get(invite_id = 1)
@@ -53,8 +51,7 @@ class CoursesModelTest(TestCase):
     # Set up non-modified objects used by all test methods
     @classmethod
     def setUpTestData(cls):    
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
-                                instructor_username = 'Ryan Murphy')
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering')
 
     def test_course_title_label(self):
         course_test = Courses.objects.get(course_id = 1)
@@ -80,12 +77,8 @@ class AssignmentModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):        
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
-                                instructor_username = 'Ryan Murphy')
-        Assignment.objects.create(assignment_id = 1, course_id = Courses.objects.get(course_id=1),
-                                    assignment_description = "Finish your sprint for the week", 
-                                    acceptance_criteria = 'Fits your definition of done',
-                                    testing_criteria = 'Run their tests')
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering')
+        Assignment.objects.create(assignment_id = 1, course_id = Courses.objects.get(course_id=1))
 
     def test_assignment_description_label(self):
         assignment_test = Assignment.objects.get(assignment_id = 1)
@@ -136,11 +129,9 @@ class SubmissionModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):        
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
-                                instructor_username = 'Ryan Murphy')
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering')
         Assignment.objects.create(assignment_id = 1, course_id = Courses.objects.get(course_id=1))
-        Submission.objects.create(submission_id = 1, assignment_id = Assignment.objects.get(assignment_id=1), 
-                                    submitted_user = 'durhams199')
+        Submission.objects.create(submission_id = 1, assignment_id = Assignment.objects.get(assignment_id=1))
 
     def test_submitted_user_label(self):
         submission_test = Submission.objects.get(submission_id = 1)
