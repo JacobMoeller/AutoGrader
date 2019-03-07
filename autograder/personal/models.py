@@ -4,7 +4,7 @@ from django.utils import timezone
 
 # Create your models here.
 class Courses(models.Model):
-    course_id = models.IntegerField(primary_key=True)
+    course_id = models.CharField(primary_key=True, max_length=8)
     course_title = models.CharField(max_length=30, blank=False, null=False)
     instructor_username = models.CharField(max_length=20, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,7 +15,7 @@ def one_month_from_today():
 class Invite(models.Model):
     invite_id = models.IntegerField(primary_key=True)
     sender_username = models.CharField(max_length=20, blank=False, null=False)
-    rec_username = models.CharField(max_length=20, blank=True, null=True)
+    rec_username = models.CharField(max_length=20, blank=False, null=False)
     course_id = models.ForeignKey('Courses', models.DO_NOTHING, blank=False, null=False)
     level_of_invite = models.CharField(max_length=10, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,3 +38,8 @@ class Submission(models.Model):
     submitted_on = models.DateTimeField(auto_now_add=True)
     submission_number = models.IntegerField(default=1)
     submitted_filename = models.CharField(max_length=20, blank=True, null=True) 
+
+class Takes(models.Model):
+    takes_id = models.IntegerField(primary_key=True)
+    course_id = models.ForeignKey('Courses', models.DO_NOTHING, blank=False, null=False)
+    student_username = models.CharField(max_length=20, blank=False, null=False)
