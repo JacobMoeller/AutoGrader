@@ -1,0 +1,20 @@
+# LAB SPECIFIC COMPOSE FILE, ADDS USER CONTEXT TO CONTAINERS.
+# Note you must specify HOST_USER_ID, HOST_GROUP_ID, DJANGO_PORT.
+#
+# Always use when running in lab:
+#     $ HOST_USER_ID=`id --user` HOST_GROUP_ID=`id --group` DJANGO_PORT=8888
+#     $ docker-compose -f docker-compose.yml -f lab.yml up
+
+version: "2.1"
+services:
+  django:
+#    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    image: django:lab
+    container_name: "django_${HOST_USER_ID}_${HOST_GROUP_ID}"
+    ports:
+      - ${DJANGO_PORT}:8000
+
+  db:
+    image: mysql:lab
+ #   user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    container_name: "mysql_${HOST_USER_ID}_${HOST_GROUP_ID}"
