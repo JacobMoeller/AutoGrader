@@ -1,0 +1,30 @@
+<!-- Shows a list of courses-->
+
+{% extends "personal/header.html" %}
+
+{% include 'base.html' %}
+
+{% block content %}
+<h1>Your Courses</h1>
+{% if user.is_authenticated %}
+    {% if course_list %}
+    <ul>
+        {% for course in course_list %}
+        <li>
+            <a href="{{ course.get_absolute_url }}">{{ course.name }}</a>
+            <p>{{ course.name }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>You are not setup as an instructor for any courses.</p>
+        <p>Ask the admin to assign you to a course.</p>
+    {% endif %}
+{% else %}
+    <p>Please login to view your courses</p>
+    <a href="{% url 'login' %}">login</a>
+{% endif %}
+
+
+{% include "personal/includes/htmlsnippet.html" %}
+{% endblock %}
