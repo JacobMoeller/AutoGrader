@@ -5,7 +5,8 @@ Welcome to the Team Deneb README for the **AUTOGRADER** assignment.
 #### Installation:
 Requires [Docker CE](https://docs.docker.com/install/) to run.
 
-(If you are using a Windows machine, you may need to [upgrade to Education](https://potsdam.onthehub.com/) to run Docker for Windows.)
+- If you are using Linux and running with *sudo*, please configure Linux to [run Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/). (Sudo does not resolve ${PWD} correctly and it will have issues creating the mount point for Django.) 
+- If you are using a Windows machine, you may need to [upgrade to Education](https://potsdam.onthehub.com/) to run Docker for Windows.
 
 After configuring Docker, build the image with docker-compose:
 ```
@@ -15,12 +16,18 @@ docker-compose build
 > See wiki for modified commands for set-up in lab or production mode.
 
 This should create images (viewed with `docker images`), *django:dev* and *mysql:dev*.
+
+#### Superuser Credentials (on the demo machine):
+>*user*=admin1, *password*=password
+
 #### To Run:
 After building, for development mode:
 ```
 docker-compose up -d
 ```
-> The `-d` flag runs in detached mode so you can use the same terminal and have the containers running. If you wish to see the server output, remove the flag.
+> The `-d` flag runs in detached mode so you can use the same terminal and have the containers running. If you wish to see the server output (for initial set-up or if you aren't sure if something is working), remove the flag.
+
+In Windows you will need to run `docker-compose up db` first, most likely, since the django container can build before mysql finishes.
 
 This will create running containers (view with `docker ps`) *django_dev* and *mysql_dev*.
 

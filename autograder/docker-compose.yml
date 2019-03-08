@@ -20,7 +20,7 @@ services:
     build: ./docker/django/
     image: django:dev
     volumes:
-      - ${PWD}:/usr/src/app
+      - .:/usr/src/app
     ports:
       - 8080:8000
     container_name: "django_dev"
@@ -34,7 +34,7 @@ services:
     build: ./docker/mysql/
     image: mysql:dev
     volumes:
-      - ${PWD}/db:/var/lib/mysql
+      - ./db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=django
       - MYSQL_USER=django
