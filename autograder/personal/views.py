@@ -9,13 +9,13 @@ def index(request) :
 
 def homepage(request) :
     args = {}
-
+    course_list = None
+    invite_list = None
     if request.user.is_authenticated:
         username = request.user.get_username()
+        invite_list = Invite.objects.filter(rec_username = username)
         if (request.user.groups.filter(name='Instructor')):
             course_list = Courses.objects.filter(instructor_username = username)
-            args = {'course_list': course_list}
-            print(course_list)
 
         else:
             take_list = Takes.objects.filter(student_username = username)
@@ -23,7 +23,7 @@ def homepage(request) :
             for take in take_list:
                 course_list.append(take.course_id)
 
-            args = {'course_list': course_list}
+    args = {'course_list': course_list, 'invite_list': invite_list}
 
 
     return render(request, 'personal/homepage.html', args)

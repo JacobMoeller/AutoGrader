@@ -24,6 +24,24 @@
     <a href="{% url 'login' %}">login</a>
 {% endif %}
 
+<h1>Your Invites</h1>
+{% if user.is_authenticated %}
+    {% if invite_list %}
+    <ul>
+        {% for invite in invite_list %}
+        <li>
+            <a href="{{ invite.get_absolute_url }}">{{ invite.course_id.course_title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>You have not been invited to any courses.</p>
+    {% endif %}
+{% else %}
+    <p>Please login to view your invites</p>
+    <a href="{% url 'login' %}">login</a>
+{% endif %}
+
 
 {% include "personal/includes/htmlsnippet.html" %}
 {% endblock %}
