@@ -11,8 +11,7 @@
     <ul>
         {% for course in course_list %}
         <li>
-            <a href="{{ course.get_absolute_url }}">{{ course.name }}</a>
-            <p>{{ course.name }}</p>
+            <a href="{{ course.get_absolute_url }}">{{ course.course_title }}</a>
         </li>
         {% endfor %}
     </ul>

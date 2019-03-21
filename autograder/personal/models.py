@@ -4,7 +4,7 @@ from django.utils import timezone
 
 # Create your models here.
 class Courses(models.Model):
-    course_id = models.CharField(primary_key=True, max_length=8)
+    course_id = models.IntegerField(primary_key=True)
     course_title = models.CharField(max_length=30, blank=False, null=False)
     instructor_username = models.CharField(max_length=20, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -29,7 +29,7 @@ class Assignment(models.Model):
     acceptance_criteria = models.CharField(max_length=200, blank=False, null=False)
     testing_criteria = models.CharField(max_length=200, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    due_on = models.DateTimeField(auto_now_add=False, null=True) 
+    due_on = models.DateTimeField(auto_now_add=False, null=True)
 
 class Submission(models.Model):
     submission_id = models.IntegerField(primary_key=True)
@@ -37,9 +37,8 @@ class Submission(models.Model):
     submitted_user = models.CharField(max_length=20, blank=False, null=False)
     submitted_on = models.DateTimeField(auto_now_add=True)
     submission_number = models.IntegerField(default=1)
-    submitted_filename = models.CharField(max_length=20, blank=True, null=True) 
+    submitted_filename = models.CharField(max_length=20, blank=True, null=True)
 
 class Takes(models.Model):
-    takes_id = models.IntegerField(primary_key=True)
     course_id = models.ForeignKey('Courses', models.DO_NOTHING, blank=False, null=False)
     student_username = models.CharField(max_length=20, blank=False, null=False)

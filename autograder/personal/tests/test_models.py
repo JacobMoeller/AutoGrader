@@ -7,9 +7,9 @@ class InviteModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
-        Invite.objects.create(invite_id = 1, course_id = Courses.objects.get(course_id=1), 
+        Invite.objects.create(invite_id = 1, course_id = Courses.objects.get(course_id=1),
                               sender_username = 'durhams199',
                               rec_username = 'rwilliam122',
                               level_of_invite = 'instructor')
@@ -52,8 +52,8 @@ class InviteModelTest(TestCase):
 class CoursesModelTest(TestCase):
     # Set up non-modified objects used by all test methods
     @classmethod
-    def setUpTestData(cls):    
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
+    def setUpTestData(cls):
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
 
     def test_course_title_label(self):
@@ -69,21 +69,21 @@ class CoursesModelTest(TestCase):
     def test_course_title_max_length(self):
         course = Courses.objects.get(course_id = 1)
         max_length = course._meta.get_field('course_title').max_length
-        self.assertEquals(max_length, 30)  
+        self.assertEquals(max_length, 30)
 
     def test_instructor_username_max_length(self):
         course = Courses.objects.get(course_id = 1)
         max_length = course._meta.get_field('instructor_username').max_length
-        self.assertEquals(max_length, 20)      
+        self.assertEquals(max_length, 20)
 
 class AssignmentModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):        
+    def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
         Assignment.objects.create(assignment_id = 1, course_id = Courses.objects.get(course_id=1),
-                                    assignment_description = "Finish your sprint for the week", 
+                                    assignment_description = "Finish your sprint for the week",
                                     acceptance_criteria = 'Fits your definition of done',
                                     testing_criteria = 'Run their tests')
 
@@ -120,12 +120,12 @@ class AssignmentModelTest(TestCase):
     def test_acceptance_criteria_max_length(self):
         assignment_test = Assignment.objects.get(assignment_id = 1)
         max_length = assignment_test._meta.get_field('acceptance_criteria').max_length
-        self.assertEquals(max_length, 200)  
+        self.assertEquals(max_length, 200)
 
     def test_testing_criteria_max_length(self):
         assignment_test = Assignment.objects.get(assignment_id = 1)
         max_length = assignment_test._meta.get_field('testing_criteria').max_length
-        self.assertEquals(max_length, 200)  
+        self.assertEquals(max_length, 200)
 
     def test_course_id_references_class(self):
         assignment_test = Assignment.objects.get(assignment_id=1)
@@ -134,12 +134,12 @@ class AssignmentModelTest(TestCase):
 
 class SubmissionModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):        
+    def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
         Assignment.objects.create(assignment_id = 1, course_id = Courses.objects.get(course_id=1))
-        Submission.objects.create(submission_id = 1, assignment_id = Assignment.objects.get(assignment_id=1), 
+        Submission.objects.create(submission_id = 1, assignment_id = Assignment.objects.get(assignment_id=1),
                                     submitted_user = 'durhams199')
 
     def test_submitted_user_label(self):
@@ -150,13 +150,13 @@ class SubmissionModelTest(TestCase):
     def test_submitted_user_max_length(self):
         submission_test = Submission.objects.get(submission_id = 1)
         max_length = submission_test._meta.get_field('submitted_user').max_length
-        self.assertEquals(max_length, 20)  
+        self.assertEquals(max_length, 20)
 
 class TakesModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',    
+        Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
         Takes.objects.create(takes_id = 1, course_id=Courses.objects.get(course_id=1), student_username = 'matthewsr199')
 
@@ -164,8 +164,8 @@ class TakesModelTest(TestCase):
         takes_test = Takes.objects.get(takes_id = 1)
         course_test = Courses.objects.get(course_id=1)
         self.assertEquals(takes_test.course_id, course_test)
-        
+
     def test_student_username_max_length(self):
         takes_test = Takes.objects.get(takes_id = 1)
         max_length = takes_test._meta.get_field('student_username').max_length
-        self.assertEquals(max_length, 20) 
+        self.assertEquals(max_length, 20)

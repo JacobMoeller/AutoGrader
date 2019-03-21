@@ -1,4 +1,5 @@
 FROM python:3.6
+ENV PYTHONBUFFERED 0
 
 WORKDIR /usr/src/app
 COPY ./requirements.txt .
