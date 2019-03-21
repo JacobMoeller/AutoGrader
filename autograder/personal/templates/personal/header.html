@@ -10,7 +10,7 @@
 	{% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'personal/css/bootstrap.min.css' %}" type = "text/css"/>
 	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-	
+
 	<style type="text/css">
 		html,
 		body {
@@ -22,13 +22,13 @@
 <body class="body" style="background-color:#D8D7D7">
 	<div class="container-fluid" style="min-height:95%; ">
 		<div class="row">
-			 
-			  
+
+
 		</div><hr>
 
 		<div class="row">
 		  <div class="col-sm-12">
-		 
+
 		   <!-- Great, til you resize. -->
 			<!--<div class="well bs-sidebar affix" id="sidebar" style="background-color:#fff">-->
 			<nav class="navbar navbar-inverse">
@@ -37,26 +37,34 @@
 			      <a class="navbar-brand" href="/">Auto Grader</a>
 			    </div>
 			    <ul class="nav navbar-nav">
-			     <li><a href='/home/'>Home</a></li>
-				<li><a href='/admin/'>Admin</a></li>
+
+					{% if user.is_authenticated %}
+					 <li><a href='/home/'>Home</a></li>
+
+					{% if user.is_superuser %}
+					<li><a href="{% url 'logout' %}">Logout</a></li>
+					<li><a href='/admin/'>Admin</a></li>
+					{% endif %}
+
+				{% else %}
 				<li><a href='/accounts/login/'>Login</a></li>
-				<li><a href='/accounts/signup'>Sign Up</a></li>
-			    </ul>
+				{% endif %}
+
 			  </div>
 			</nav>
 		  </div> <!--col-sm-2-->
 		  <div class="col-sm-10">
-		  
+
 			<div class='container-fluid'>
 			<br><br>
 			   {% block content %}
-			   {% endblock %}	
+			   {% endblock %}
 			</div>
 		  </div>
-		</div> 
+		</div>
 	</div>
-	
-	
+
+
 </body>
 
 </html>
