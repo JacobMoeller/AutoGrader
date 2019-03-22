@@ -158,14 +158,14 @@ class TakesModelTest(TestCase):
         # Set up non-modified objects used by all test methods
         Courses.objects.create(course_id = 1, course_title = 'Software Engineering',
                                 instructor_username = 'Ryan Murphy')
-        Takes.objects.create(takes_id = 1, course_id=Courses.objects.get(course_id=1), student_username = 'matthewsr199')
+        Takes.objects.create(student_username = 'matthewsr199', course_id=Courses.objects.get(course_id=1))
 
     def test_course_id_references_course(self):
-        takes_test = Takes.objects.get(takes_id = 1)
+        takes_test = Takes.objects.get(student_username = 'matthewsr199')
         course_test = Courses.objects.get(course_id=1)
         self.assertEquals(takes_test.course_id, course_test)
 
     def test_student_username_max_length(self):
-        takes_test = Takes.objects.get(takes_id = 1)
+        takes_test = Takes.objects.get(student_username = 'matthewsr199')
         max_length = takes_test._meta.get_field('student_username').max_length
         self.assertEquals(max_length, 20)

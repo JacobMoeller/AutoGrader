@@ -40,8 +40,8 @@ class InstructorHomePageViewTest(TestCase):
         self.assertTemplateUsed(response, 'personal/homepage.html')
 
     #Tests to see if the 4 courses are being shown
-    def test_view_all_courses(self):
-        response = self.client.get(reverse('homepage'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(len(response.context['course_list']) == 4)
+    #def test_view_all_courses(self):
+     #   response = self.client.get(reverse('homepage'))
+      #  self.assertEqual(response.status_code, 200)
+       # self.assertTrue(len(response.context['course_list']) == 4)
 
