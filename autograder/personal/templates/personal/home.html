@@ -4,6 +4,8 @@
 
 {% include 'base.html' %}
 
+{% load personal_extras %}
+
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
@@ -13,6 +15,28 @@
   <a href="{% url 'login' %}">login</a>
 {% endif %}
 <p>Hello! Welcome to Auto Grader!</p>
+
+
+{% if request.user|has_group:"Student" %} 
+    <p>You are currently logged in as a Student</p>
+{% endif %}
+
+
+
+{% if request.user|has_group:"Grader" %} 
+    <p>You are currently logged in as a Grader</p>
+{% endif %}
+
+
+
+{% if request.user|has_group:"Instructor" %} 
+    <p>You are currently logged in as a Instructor</p>
+
+{% endif %}
+
+
+
+
 
 {% include "personal/includes/htmlsnippet.html" %}
 {% endblock %}
