@@ -1,47 +1,170 @@
 <!-- Shows a list of courses-->
 
 {% extends "personal/header.html" %}
-
 {% include 'base.html' %}
-
 {% block content %}
-<h1>Your Courses</h1>
-{% if user.is_authenticated %}
+{% load extra_tags %}
+
+<hr>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+  <h1 style="text-align:right;">You is special,
+    {% if request.user|has_group:"Instructor" and user.last_name %}
+      Professor {{ user.last_name }}
+    {% elif user.first_name %}
+      {{ user.first_name }}
+    {% else %}
+      {{ user.username }}
+    {% endif %}
+  </h1>
+
+  <h2><a name="courses"></a>Your Courses
+  {% if request.user|has_group:"Instructor" %}
+    <a class="action" href="{% url 'course_create' %}">
+    <sup>+</sup>
+    </a>
+
+    <div style="float:right; font-size:.5em;">
+      <select>
+      <option value="sp19">Spring 2019</option>
+      <option value="fa18">Fall 2018</option>
+      <option value="sp18">Spring 2017</option>
+      <option value="fa18">Fall 2017</option>
+      </select>
+    </div>
+  {% endif %}
+  </h2>
+
     {% if course_list %}
-    <ul>
+
         {% for course in course_list %}
-        <li>
-            <a href="{{ course.get_absolute_url }}">{{ course.course_title }}</a>
-        </li>
+        <div class="col-lg-1"></div>
+        <div class="course col-lg-5">
+            <h4>
+              <a href="{{ course.get_absolute_url }}">
+                <i>{{ course.course_number }}</i> {{course.course_title}}
+                <small class="small">(CRN {{course.course_crn}})</small>
+              </a>
+              {% if request.user|is_instructor:course %}
+              <div class="edit">
+                <button type="button" class="btn btn-link btn-sm">
+                <a class="action" href="{% url 'course_update' course.id %}" alt="Edit course">
+                  <span class="align-middle glyphicon glyphicon-cog"></span>
+                </a>
+                </btn>
+                <button type="button" class="btn btn-link btn-sm">
+                  <span class="align-middle glyphicon glyphicon-floppy-save" alt="Download course"></span>
+                </btn>
+                <button type="button" class="btn btn-link btn-sm collapsed" data-target="#collapse{{ course.id }}" data-toggle="collapse" aria-expanded>
+                  <span class="align-middle glyphicon glyphicon-resize-full" alt="Collapse details"></span>
+                </btn>
+              </div>
+              {% endif %}
+            </h4>
+          <div id="collapse{{ course.id }}" class="collapse">
+            <ul class="assignments">
+              <li><a href="#">Students ({{ course|student_count }})</a></li>
+              <li><a href="#">Graders</a></li>
+              <li><a href="#">Projects ({{ course|assignment_count }}) </a>
+              {% if course|assignment_count %}
+                <a data-toggle="collapse" data-target="#more{{ course.id }}" aria-expanded>
+                  <sup><small>(most recent)</small> <span class="glyphicon glyphicon-search"></span></sup>
+                </a>
+                <ul id="more{{ course.id }}" class="panel-collapse collapse in">
+                  {% for assignment in course|top_three_recent_assignments %}
+                     <li>
+                       <a href="{{ assignment.get_absolute_url }}">
+                       {{ assignment.title|truncatechars:"40" }}</a>
+                     </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+          </div>
+          <br />
+            <table class="course-action">
+              <tr>
+                <td>
+                  <ul>
+                    <li>
+                      <a href="{% url 'course_detail' course.id %}" class="btn btn-info btn-sm">
+                      <span class="glyphicon glyphicon-eye-open"></span> View
+                      </a>
+                    </li>
+                    {% if request.user|is_instructor:course %}
+                      <li>
+                        <a href="{% url 'create_invite' course.id %}" class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-envelope"></span> Invite
+                      </a>
+                      </li>
+                      <li>
+                        <a href="{% url 'course_delete' course.id %}" class="important btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                        </a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </div><!-- course col-lg-5 -->
         {% endfor %}
-    </ul>
-    {% else %}
-        <p>You are not setup as an instructor for any courses.</p>
-        <p>Ask the admin to assign you to a course.</p>
-    {% endif %}
-{% else %}
-    <p>Please login to view your courses</p>
-    <a href="{% url 'login' %}">login</a>
-{% endif %}
 
-<h1>Your Invites</h1>
-{% if user.is_authenticated %}
+    {% elif request.user|has_group:"Instructor" %}
+      <p>You are not set-up as an instructor for any courses.</p>
+      <p><a href="{% url 'course_create' %}" class="btn btn-info btn-sm">Create some courses?</a></p>
+    {% elif request.user|has_group:"Student" %}
+      <p>You are not in any courses currently.</p>
+      <p>Do you have any pending invites?</p>
+    {% endif %}
+
+  <hr>
+  <h2><a name="invites"></a>Your Invites
+  {% if request.user|has_group:"Instructor" or user.is_staff %}
+    <a class="action" href="">
+      <sup>+</sup>
+    </a>
+  {% endif %}
+  </h2>
+
     {% if invite_list %}
-    <ul>
         {% for invite in invite_list %}
-        <li>
-            <a href="{{ invite.get_absolute_url }}">{{ invite.course_id.course_title }}</a>
-        </li>
+        <div class="invite col-lg-4">
+          <a class="btn edit" href="#">
+          <span class="glyphicon glyphicon-trash">
+        </a>
+          </span>
+        <table>
+        <tr colspan="2">
+          <td>
+            <h4>
+            {{ invite.course_id.course_number }}
+            {{ invite.course_id.course_title }}
+            <b>({{ invite.get_level_of_invite_display }})</b>
+          </h4>
+          </td>
+        </tr></td>
+          <td>
+            Sent by: <b>{{ invite.sender_username }}</b>
+            {% if invite.sender_username|full_name %}
+                ({{ invite.sender_username|full_name }})
+            {% endif %}
+          </td>
+        </tr><tr>
+          <td colspan="2">
+            <a href="#" class="btn btn-info btn-sm">Accept Invite & Join Course</a>
+          </td>
+        </tr><tr>
+          <td><i>Expires on: {{ invite.expires_on }} ({{ invite.time_left }} left)</i></td>
+        </tr>
+        </table>
+        </div>
         {% endfor %}
-    </ul>
     {% else %}
-        <p>You have not been invited to any courses.</p>
+        <p>You have no open invites to any courses.</p>
     {% endif %}
-{% else %}
-    <p>Please login to view your invites</p>
-    <a href="{% url 'login' %}">login</a>
-{% endif %}
-
-
+  </div>
+</div>
 {% include "personal/includes/htmlsnippet.html" %}
 {% endblock %}

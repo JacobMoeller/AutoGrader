@@ -1,0 +1,13 @@
+{% extends "personal/header.html" %}
+{% include 'base.html' %}
+
+{% block login %}
+    <h2>Login</h2>
+    <form class="form-horizontal" method="post">
+      <div class="form-group">
+      {% csrf_token %}
+      {{ form.as_p }}
+      </div>
+      <button type="submit">Login</button>
+    </form>
+{% endblock %}

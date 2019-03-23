@@ -1,0 +1,59 @@
+{% extends "personal/header.html" %}
+{% include 'base.html' %}
+{% load extra_tags %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-1"><!-- gutter --></div>
+  <div class="col-lg-2">
+  <ul class="course-nav">
+    <li><a href="">Course Details</a></li>
+    <li><a href="#project">Course Pojects</a></li>
+    {% if user|is_instructor:course %}
+    <li><a href="#roster">Student Roster</a></li>
+    {% endif %}
+    <li><a href="">My Submissions</a></li>
+    <li><a href="">Graders</a></li>
+  </ul>
+</div>
+
+<div class="col-lg-1"><!-- gutter --></div>
+
+<div class="col-lg-8 course-detail">
+<h2 style="display:inline-block;">Course: <b>{{ course }}</b></h2>
+  <span id="small">[<i>Instructor:</i>
+    <b>{{ course.instructor_username }}</b>
+    {% if course.instructor_username.last_name %}
+      (Professor {{ course.instructor_username.last_name }})
+    {% endif %}
+
+    {% if course.instructor_username.email %}
+      <a href="mailto:{{ course.instructor_username.email }}">
+      <span class="glyphicon glyphicon-send"></span>
+    </a>
+    {% endif %}
+    ]
+  </span>
+
+  <hr>
+  <b>Course Description</b>:
+  {% lorem 1 p %}
+
+  <h3><a name="Projects"></a>Projects</h3>
+  {% if course|assignment_count %}
+  <ul>
+    {% for assignment in course|get_assignments %}
+     <li><a href="{{ assignment.get_absolute_url }}">{{ assignment.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  There are currently no projects assigned for this course.
+  {% endif %}
+
+  {% if user|is_instructor:course %}
+  <hr>
+  <h3><a name="Roster"></a>Roster</h3>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

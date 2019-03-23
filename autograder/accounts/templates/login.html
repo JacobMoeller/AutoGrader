@@ -1,0 +1,13 @@
+{% extends "personal/header.html" %}
+{% include 'personal/base.html' %}
+
+{% block login %}
+<h1>You are not currently logged in.</h1>
+  <p>You need an account to access the site. Please login below.</p>
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+{% endblock %}

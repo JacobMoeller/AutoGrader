@@ -1,35 +1,32 @@
 <!-- Allows the user to login/logout and gives a different message depending on whether or not the user is logged in-->
 
 {% extends "personal/header.html" %}
-
 {% include 'base.html' %}
-
 {% load personal_extras %}
 
 {% block content %}
+<h2>Welcome to Auto Grader!</h2>
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
+  <p> Hi, {{ user.username }}!
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>
 {% endif %}
-<p>Hello! Welcome to Auto Grader!</p>
 
 
-{% if request.user|has_group:"Student" %} 
+{% if request.user|has_group:"Student" %}
     <p>You are currently logged in as a Student</p>
 {% endif %}
 
 
 
-{% if request.user|has_group:"Grader" %} 
+{% if request.user|has_group:"Grader" %}
     <p>You are currently logged in as a Grader</p>
 {% endif %}
 
 
 
-{% if request.user|has_group:"Instructor" %} 
+{% if request.user|has_group:"Instructor" %}
     <p>You are currently logged in as a Instructor</p>
 
 {% endif %}

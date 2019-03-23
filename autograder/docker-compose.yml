@@ -16,7 +16,6 @@ networks:
 
 services:
   django:
-    restart: always
     build: ./docker/django/
     image: django:dev
     volumes:
@@ -24,12 +23,14 @@ services:
     ports:
       - 8080:8000
     container_name: "django_dev"
+    environment:
+      - PYTHONUNBUFFERED=1
     networks:
       # Join the infrastructure network
       - infrastructure
     depends_on:
       - db
- 
+
   db:
     build: ./docker/mysql/
     image: mysql:dev
@@ -40,6 +41,7 @@ services:
       - MYSQL_USER=django
       - MYSQL_PASSWORD=django
       - MYSQL_DATABASE=djangodocker_db
+      - PYTHONUNBUFFERED=1
     container_name: "mysql_dev"
     networks:
       # Join the infrastructure network

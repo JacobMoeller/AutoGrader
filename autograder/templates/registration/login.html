@@ -1,16 +1,14 @@
-<!--Login Field-->
-
-
 {% extends "personal/header.html" %}
 
-
-{% block title %}Login{% endblock %}
-
-{% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+{% block login %}
+<div class="login-box-container">
+  <div class="login-box col-lg-5">
+  <h2>Please login to continue.</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Login</button>
+  </form>
+  </div>
+</div>
 {% endblock %}

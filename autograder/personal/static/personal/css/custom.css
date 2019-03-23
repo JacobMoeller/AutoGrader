@@ -1,0 +1,248 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  background-color: #D8D7D7;
+}
+
+.container-fluid {
+  margin: 2% 0% 5% 0%;
+  min-height: 93%;
+  padding:0;
+}
+
+.navbar {
+  background-color: rgba(0,0,0,.8);
+  color: #fff;
+  border: none;
+  z-index: 5;
+}
+
+.course, .course-detail, .login-box {
+  padding: 1%;
+  margin: 1%;
+  border-radius: 5px 0px 5px 0px;
+  border-bottom: 6px rgba(100,100,100,.3) solid;
+  border-right: 4px rgba(100,100,100,.3) solid;
+}
+
+.course {
+  background-color: rgba(240,240,240,.8);
+  min-height:auto;
+  height: 100%;
+}
+
+.course:hover {
+  background-color: rgba(240,240,240,1);
+}
+
+.course a {
+  font-weight: bold;
+  font-size: .9em;
+  color: rgba(25,25,25,1);
+}
+
+.course a:hover {
+  text-decoration: none;
+}
+
+.invite {
+  padding: 1%;
+  border-radius: 5px;
+  margin-bottom: 5%;
+  background-color: rgba(250,250,250,.4);
+}
+
+.invite-count{
+  color: red;
+  font-size:12px;
+  font-weight:bold;
+  position: relative;
+  left: -5px;
+  top: -7px;
+  background-color: rgba(0,0,0,.5);
+  border-radius:5px;
+}
+
+.action:hover {
+  text-decoration: none;
+}
+
+.btn {
+  border: 0;
+}
+
+.edit {
+  float: right;
+  background-color: rgba(255,255,255,1);
+  border: 0;
+  border-radius: 15px;
+  margin: 0; padding: 0;
+}
+
+.edit button:hover, .btn-info {
+  background-color: rgba(125,125,155,1);
+  border-radius: 15px;
+}
+
+.course ul {
+  list-style-type: none;
+  font-family: monospace;
+  font-size: .9em;
+}
+
+.course ul li a {
+  font-weight: normal;
+}
+
+.course-nav {
+  color: rgba(255,255,255,1);
+  list-style-type: none;
+  margin: 1% 0%;
+  padding: 0;
+}
+
+.course-nav a {
+  color: rgba(255,255,255,1);
+}
+.course-nav li:hover a {
+  color: rgba(0,0,0,1);
+}
+
+.course-nav li {
+  background-color: rgba(0,0,0,.7);
+  border-radius: 5px;
+  margin-bottom: 3%;
+  padding: 5%;
+  width: 100%;
+  text-align: center;
+}
+
+.course-nav li:hover {
+  background-color: rgba(0,0,0,.3);
+}
+
+.col {
+  margin-top: 5px;
+}
+
+.login-box {
+  background-color: rgba(255,255,255,1);
+  position: relative;
+  top: 25%;
+  left: 33%;
+  min-height: 25%;
+  height: auto;
+  width: 33%;
+}
+
+.login-box-container {
+    background-color: rgba(0,0,0,.8);
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    margin: 0; padding: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+}
+
+.navbar {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  border-radius: 0px;
+  opacity: 1.0;
+}
+
+.course-action {
+  list-style-type: none;
+  border: none;
+  width: 100%;
+}
+
+.course-action li {
+  color: #fff;
+  margin: 0%;
+  min-width: 85%;
+  display: inline-block;
+}
+
+.course-action li a {
+  width: 100%;
+  padding: 2%;
+  border: none;
+  float:left;
+  color: #fff;
+  background-color: rgba(25,25,25,.2);
+}
+
+.course-detail {
+  background-color: rgba(255,255,255,1);
+  padding: 2%;
+}
+
+.glyphicon {
+  color: rgba(100,100,175,1);
+}
+
+.navbar .glyphicon {
+  color: rgba(200,200,200,1);
+}
+
+.btn:hover .glyphicon {
+  color:white;
+}
+
+.btn:hover {
+  background-color: rgba(25,25,50,1);
+}
+
+#small, .course_nav ul li a {
+  float: right;
+  color: grey;
+  text-transform: uppercase;
+  font-size: .8em;
+  font-family: monospace;
+}
+
+h1,h3,h5,h1 a, h3 a, h5 a, h2 a:hover, h4 a:hover, h6 a:hover {
+  color: rgba(25,25,50,1);
+}
+
+h2,h4,h6,h2 a,h4 a, h6 a,a:hover,h1 a,h3 a,h5 a {
+  color: rgba(100,100,155,1);
+}
+
+.important {
+  background-color: rgba(50,50,50,.3);
+  border-color: rgba(50,50,50,.3);
+  border: none;
+}
+
+.important:hover {
+  background-color: red;
+  border-color: red;
+}
+
+hr {
+  width: 80%;
+  border-bottom: 2px rgba(150,150,150,.1) solid;
+}
+
+small {
+  font-family: sans-serif;
+}
+
+ul.assignments ul {
+  background-color: rgba(255,255,255,.5);
+}
+
+form p label {
+  width: 25%;
+}
+
+form p input {
+  width: 70%;
+}
