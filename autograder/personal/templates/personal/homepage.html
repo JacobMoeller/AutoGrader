@@ -115,8 +115,12 @@
       <p>You are not set-up as an instructor for any courses.</p>
       <p><a href="{% url 'course_create' %}" class="btn btn-info btn-sm">Create some courses?</a></p>
     {% elif request.user|has_group:"Student" %}
-      <p>You are not in any courses currently.</p>
-      <p>Do you have any pending invites?</p>
+      <p>You are not in any courses currently as a student.</p>
+      {% if request.user|has_invites %}
+        <p>You have pending invites.</p>
+      {% endif %}
+    {% else %}
+        <p>You are not in any courses currently.</p>
     {% endif %}
 
   <hr>
@@ -131,7 +135,7 @@
     {% if invite_list %}
         {% for invite in invite_list %}
         <div class="invite col-lg-4">
-          <a class="btn edit" href="#">
+          <a class="btn" href="#">
           <span class="glyphicon glyphicon-trash">
         </a>
           </span>
