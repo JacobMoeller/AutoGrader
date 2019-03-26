@@ -7,6 +7,8 @@ from personal.forms import InviteForm
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import Group
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 # User homepage
@@ -40,7 +42,8 @@ def index(request):
         username = request.user.get_username()
         # gets current list of invites for user
         invite_list = Invite.objects.filter(rec_username=username)
-        take_list = Takes.objects.filter(username=username).values_list('course_id', flat=True)
+        take_list = Takes.objects.filter(username=username).\
+            values_list('course_id', flat=True)
         course_list = Courses.objects.filter(instructor_username=username)
 
         course_list = course_list | Courses.objects.filter(id__in=take_list)
@@ -183,3 +186,24 @@ class InviteDelete(DeleteView):
             raise PermissionDenied("You don't have permission \
                 to delete this invitation.")
         return invite
+
+
+# View for sending email invites
+def email(request):
+    print("At the email page")
+
+    # Open a file for debug purposes.
+    f_debug = open("debug.txt", "w")
+    f_debug.write("Outside the if statement")
+    if request.method == 'POST':
+        # Check to see if we're in the If statement within email()
+        f_debug.write("Inside the If statement.")
+
+        recepient = request.POST['recepient']
+        message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
+        send_mail('Invite to join the Potsdam Autograder',
+            'This is an autograder message', # The content.
+            settings.EMAIL_HOST_USER, # The sender
+            ['alex.pendell@gmail.com'], # The recipient
+            fail_silently = False) # Whether or not we want to see errors
+    return render(request, 'personal/email_form.html')

@@ -21,6 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = strtobool(os.environ.get('DEBUG'))
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
+#Creates all the data for sending emails
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'potsdamautograder@gmail.com'
+EMAIL_HOST_PASSWORD = 'deneb405'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!

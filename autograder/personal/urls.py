@@ -39,4 +39,9 @@ urlpatterns = [
         views.InviteDelete.as_view(),
         name='invite_delete'
         ),
+    path(
+        'email/',
+        views.email,
+        name='email'
+        ),
 ]
