@@ -24,7 +24,7 @@ DEBUG = True
 SECRET_KEY = 'a-ac#o7=!ex9hb6h@4+d_z(9n-$$wle*#+a*7x5ma+cx_dvng2h'
 
 if DEBUG is False:
-    SECRET_KEY = os.environ('SECRET_KEY') 
+    SECRET_KEY = os.environ('SECRET_KEY')
 
 # SECURITY WARNING: not for production; changed for Windows configs
 ALLOWED_HOSTS = ['*']
@@ -97,8 +97,6 @@ DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 if 'test' in sys.argv and DEBUG is True:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['TEST']['NAME'] = '/dev/shm/autograder.test.db.sqlite3'
-elif DEBUG is False:
-    DATABASES['default']['TEST']['NAME'] = '/dev/shm/autograder.test.db.mysql'
 
 if DEBUG is False:
     DATABASES = {
@@ -149,3 +147,7 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'
 STATIC_URL = '/static/'
+
+# Session based information
+SESSION_EXPIRY = 3600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
