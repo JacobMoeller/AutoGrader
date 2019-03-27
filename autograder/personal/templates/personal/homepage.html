@@ -3,13 +3,13 @@
 {% extends "personal/header.html" %}
 {% include 'base.html' %}
 {% block content %}
-{% load extra_tags %}
+{% load personal_extras %}
 
 <hr>
-<div class="row">
   <div class="col-lg-1"></div>
   <div class="col-lg-10">
-  <h1 style="text-align:right;">You is special,
+  <h1 style="text-align:right;">Your Dashboard
+    <span class="small">
     {% if request.user|has_group:"Instructor" and user.last_name %}
       Professor {{ user.last_name }}
     {% elif user.first_name %}
@@ -17,6 +17,7 @@
     {% else %}
       {{ user.username }}
     {% endif %}
+  </span>
   </h1>
 
   <h2><a name="courses"></a>Your Courses
@@ -41,27 +42,27 @@
         {% for course in course_list %}
         <div class="col-lg-1"></div>
         <div class="course col-lg-5">
-            <h4>
+          {% if request.user|is_instructor:course %}
+          <div class="edit">
+            <button type="button" class="btn btn-link btn-sm">
+            <a class="action" href="{% url 'course_update' course.id %}" alt="Edit course">
+              <span class="align-middle glyphicon glyphicon-cog"></span>
+            </a>
+            </btn>
+            <button type="button" class="btn btn-link btn-sm">
+              <span class="align-middle glyphicon glyphicon-floppy-save" alt="Download course"></span>
+            </btn>
+            <button type="button" class="btn btn-link btn-sm collapsed" data-target="#collapse{{ course.id }}" data-toggle="collapse" aria-expanded>
+              <span class="align-middle glyphicon glyphicon-resize-full" alt="Collapse details"></span>
+            </btn>
+          </div>
+          {% endif %}
+            <h3>
               <a href="{{ course.get_absolute_url }}">
                 <i>{{ course.course_number }}</i> {{course.course_title}}
-                <small class="small">(CRN {{course.course_crn}})</small>
+                <span class="small">(CRN {{course.course_crn}})</span>
               </a>
-              {% if request.user|is_instructor:course %}
-              <div class="edit">
-                <button type="button" class="btn btn-link btn-sm">
-                <a class="action" href="{% url 'course_update' course.id %}" alt="Edit course">
-                  <span class="align-middle glyphicon glyphicon-cog"></span>
-                </a>
-                </btn>
-                <button type="button" class="btn btn-link btn-sm">
-                  <span class="align-middle glyphicon glyphicon-floppy-save" alt="Download course"></span>
-                </btn>
-                <button type="button" class="btn btn-link btn-sm collapsed" data-target="#collapse{{ course.id }}" data-toggle="collapse" aria-expanded>
-                  <span class="align-middle glyphicon glyphicon-resize-full" alt="Collapse details"></span>
-                </btn>
-              </div>
-              {% endif %}
-            </h4>
+            </h3>
           <div id="collapse{{ course.id }}" class="collapse">
             <ul class="assignments">
               <li><a href="#">Students ({{ course|student_count }})</a></li>
@@ -69,7 +70,8 @@
               <li><a href="#">Projects ({{ course|assignment_count }}) </a>
               {% if course|assignment_count %}
                 <a data-toggle="collapse" data-target="#more{{ course.id }}" aria-expanded>
-                  <sup><small>(most recent)</small> <span class="glyphicon glyphicon-search"></span></sup>
+                  <sup><span class="small">(most recent)</span>
+                  <span class="glyphicon glyphicon-search"></span></sup>
                 </a>
                 <ul id="more{{ course.id }}" class="panel-collapse collapse in">
                   {% for assignment in course|top_three_recent_assignments %}
@@ -134,18 +136,24 @@
 
     {% if invite_list %}
         {% for invite in invite_list %}
-        <div class="invite col-lg-4">
-          <a class="btn" href="#">
+        <div class="col-lg-1"></div>
+        <div class="invite col-lg-5">
+
+        <a class="btn edit" href="#">
           <span class="glyphicon glyphicon-trash">
-        </a>
           </span>
+        </a>
+        <center>
         <table>
         <tr colspan="2">
           <td>
+            <h3>{{ invite.get_level_of_invite_display }} Invite</h3>
             <h4>
             {{ invite.course_id.course_number }}
             {{ invite.course_id.course_title }}
-            <b>({{ invite.get_level_of_invite_display }})</b>
+            <span class="small">
+            (CRN {{ invite.course_id.course_crn }})
+            </span>
           </h4>
           </td>
         </tr></td>
@@ -160,15 +168,19 @@
             <a href="#" class="btn btn-info btn-sm">Accept Invite & Join Course</a>
           </td>
         </tr><tr>
-          <td><i>Expires on: {{ invite.expires_on }} ({{ invite.time_left }} left)</i></td>
+          <td>
+            <small><i>
+              Expires on: {{ invite.expires_on }} ({{ invite.time_left }} left)
+            </i></small>
+          </td>
         </tr>
         </table>
+      </center>
         </div>
         {% endfor %}
     {% else %}
         <p>You have no open invites to any courses.</p>
     {% endif %}
   </div>
-</div>
 {% include "personal/includes/htmlsnippet.html" %}
 {% endblock %}

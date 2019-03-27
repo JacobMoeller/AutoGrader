@@ -5,7 +5,7 @@ from personal.models import Courses
 
 
 class InstructorHomePageViewTest(TestCase):
-    fixtures = ['initial_auth.json', 'initial_admin.json', ]
+    fixtures = ['initial_data.json', ]
 
     @classmethod
     def setUpTestData(cls):

@@ -7,7 +7,7 @@
   	<title>Auto Grader</title>
   	<meta charset="utf-8" />
   	{% load staticfiles %}
-  	{% load extra_tags %}
+  	{% load personal_extras %}
     <link rel="stylesheet" href="{% static 'personal/css/bootstrap.min.css' %}" type = "text/css"/>
     <link rel="stylesheet" href="{% static 'personal/css/custom.css' %}" type = "text/css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,13 +17,11 @@
 
   <body class="body">
     <div class="container-fluid">
-
-      <!-- NAVIGATION -->
       <div class="row">
-        <div class="col-lg-12">
+      <!-- NAVIGATION -->
           <nav class="navbar navbar-inverse">
             <div class="navbar-header">
-              <a class="navbar-brand" href="/">Auto Grader</a>
+              <a class="navbar-brand" href="/"><b>AutoGrader</b></a>
     		    </div>
     		    <ul class="nav navbar-nav">
               {% if user.is_authenticated %}
@@ -63,12 +61,11 @@
       			    <li><a href='/accounts/login/'>Login</a></li>
               {% endif %}
             </nav>
-          </div> <!--col-lg-12-->
         </div>
 
         <!-- CONTENT -->
         <div class="row">
-      	  <div class="col-lg-12">
+      	  <div class="col-lg-12 content">
               <br /><br />
               {% if user.is_authenticated %}
                 {% block content %}

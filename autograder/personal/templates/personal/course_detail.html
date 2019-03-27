@@ -1,9 +1,8 @@
 {% extends "personal/header.html" %}
 {% include 'base.html' %}
-{% load extra_tags %}
+{% load personal_extras %}
 
 {% block content %}
-<div class="row">
   <div class="col-lg-1"><!-- gutter --></div>
   <div class="col-lg-2">
   <ul class="course-nav">
@@ -21,7 +20,7 @@
 
 <div class="col-lg-8 course-detail">
 <h2 style="display:inline-block;">Course: <b>{{ course }}</b></h2>
-  <span id="small">[<i>Instructor:</i>
+  <span class="small">[<i>Instructor:</i>
     <b>{{ course.instructor_username }}</b>
     {% if course.instructor_username.last_name %}
       (Professor {{ course.instructor_username.last_name }})
@@ -54,6 +53,5 @@
   <hr>
   <h3><a name="Roster"></a>Roster</h3>
   {% endif %}
-</div>
 </div>
 {% endblock %}
