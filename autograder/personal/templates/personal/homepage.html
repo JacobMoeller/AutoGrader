@@ -9,15 +9,15 @@
   <div class="col-lg-1"></div>
   <div class="col-lg-10">
   <h1 style="text-align:right;">Your Dashboard
-    <span class="small">
-    {% if request.user|has_group:"Instructor" and user.last_name %}
+    <small class="small" style="font-size: .5em; margin: 0% 1%;">
+    [{% if request.user|has_group:"Instructor" and user.last_name %}
       Professor {{ user.last_name }}
     {% elif user.first_name %}
       {{ user.first_name }}
     {% else %}
       {{ user.username }}
-    {% endif %}
-  </span>
+    {% endif %}]
+  </small>
   </h1>
 
   <h2><a name="courses"></a>Your Courses

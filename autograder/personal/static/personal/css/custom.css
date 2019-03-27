@@ -197,8 +197,12 @@ html, body {
   float: right;
   color: grey;
   text-transform: uppercase;
-  font-size: .7em;
+  font-size: .8em;
   font-family: monospace;
+}
+
+#small {
+  font-size: .5em;
 }
 
 h1,h3,h5,h1 a, h3 a, h5 a, h2 a:hover, h4 a:hover, h6 a:hover {
@@ -223,10 +227,6 @@ h2,h4,h6,h2 a,h4 a, h6 a,a:hover,h1 a,h3 a,h5 a {
 hr {
   width: 80%;
   border-bottom: 2px rgba(150,150,150,.1) solid;
-}
-
-small {
-  font-family: sans-serif;
 }
 
 ul.assignments ul {
