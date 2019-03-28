@@ -1,0 +1,21 @@
+{% extends "personal/header.html" %}
+
+{% include 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h1>Add student to join the Autograder</h1>
+
+  <p>Enter student's email.</p>
+  <form method="post" action="{%url 'email' %}">
+      {% csrf_token %}
+      <textarea name="user" placeholder="student@potsdam.edu"></textarea>
+      <input id="submit" type="submit" value="Send" />
+    </form>
+{% else %}
+    <p>Please login to invite students to the Autograder</p>
+    <a href="{% url 'login' %}">login</a>
+{% endif %}
+
+{% include "personal/includes/htmlsnippet.html" %}
+{% endblock %}
