@@ -8,7 +8,8 @@ if __name__ == '__main__':
         from django.core.management import execute_from_command_line
 
         if len(sys.argv) == 2 and sys.argv[1] == 'migrate':
-            execute_from_command_line(['manage.py', 'chgroups', 'add'])
+            execute_from_command_line(['manage.py', 'loaddata', 'initial_auth.json'])
+            execute_from_command_line(['manage.py', 'loaddata', 'initial_superuser.json'])
         execute_from_command_line(sys.argv)
 
     except ImportError as exc:
