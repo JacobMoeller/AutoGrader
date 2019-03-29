@@ -12,6 +12,14 @@ def homepage(request) :
     course_list = None
     invite_list = None
     if request.user.is_authenticated:
+        print('YEE')
+        if request.method == "POST":
+            invite_id = request.POST.get('invite_name')
+            invite = Invite.objects.get(id = invite_id)
+            Takes.objects.create(
+                student_username=request.user,
+                course_id=Courses.objects.get(id = invite.course_id.id))
+            Invite.objects.filter(id = invite_id).delete()
         username = request.user.get_username()
         invite_list = Invite.objects.filter(rec_username = username)
         if (request.user.groups.filter(name='Instructor')):

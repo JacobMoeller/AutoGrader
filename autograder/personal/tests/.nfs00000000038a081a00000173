@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User, Group
 from django.urls import reverse
-from personal.models import Courses, Invite, Takes
+from personal.models import Courses
 from django.contrib.auth.models import Group, Permission
 
 
@@ -45,22 +45,11 @@ class InstructorHomePageViewTest(TestCase):
             )
             cls.course.save()
 
-        cls.invite = Invite.objects.create(
-            id = 1,
-            sender_username = User.objects.get(username = 'testuser1'),
-            rec_username = User.objects.get(username = 'testuser2'),
-            course_id = Courses.objects.get(id=1)
-        )
-        cls.invite.save()
-
-
-
 
     # Tests to see if the url is correct
     def test_view_url_exists_at_desired_location(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-
 
     ## Tests to see if the url name is accessible
     def test_view_url_accessible_by_name(self):

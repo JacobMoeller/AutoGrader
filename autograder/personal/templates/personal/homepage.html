@@ -30,8 +30,14 @@
     <ul>
         {% for invite in invite_list %}
         <li>
-            <a href="{{ invite.get_absolute_url }}">{{ invite.course_id.course_title }}</a>
+            {{ invite.course_id.course_title }} from {{invite.sender_username}}
         </li>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="hidden" name="invite_name" value="{{invite.id}}">
+          <button type="submit">Accept Invite</button>
+        </form>
         {% endfor %}
     </ul>
     {% else %}
