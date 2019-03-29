@@ -122,3 +122,23 @@ class InstructorHomePageViewTest(TestCase):
     def test_view_url_accessible_by_name(self):
         response = self.client.get(reverse('homepage'), follow=True)
         self.assertEqual(response.status_code, 200)
+
+
+# Tests for the Email view.
+class EmailPageTest(TestCase):
+
+    # Tests to see if the url is correct
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get('/email/')
+        self.assertEqual(response.status_code, 200)
+
+    # Tests to see if the url name is accessible
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('email'))
+        self.assertEqual(response.status_code, 200)
+
+    # Tests to see if the correct template is being used
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('email'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'personal/email_form.html')

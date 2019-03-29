@@ -199,11 +199,11 @@ def email(request):
         # Check to see if we're in the If statement within email()
         f_debug.write("Inside the If statement.")
 
-        recepient = request.POST['recepient']
+        recepient = request.POST['user']
         message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
         send_mail('Invite to join the Potsdam Autograder',
             'This is an autograder message', # The content.
             settings.EMAIL_HOST_USER, # The sender
-            ['alex.pendell@gmail.com'], # The recipient
+            [recepient], # The recipient
             fail_silently = False) # Whether or not we want to see errors
     return render(request, 'personal/email_form.html')
