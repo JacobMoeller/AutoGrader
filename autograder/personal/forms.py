@@ -1,6 +1,6 @@
 from django.forms import ModelForm
-from personal.models import Invite
-
+from personal.models import Courses, Invite
+from django import forms
 
 class InviteForm(ModelForm):
     def __init__(self, **kwargs):
@@ -20,3 +20,11 @@ class InviteForm(ModelForm):
         model = Invite
         fields = '__all__'
         exclude = ['course_id', 'sender_username', ]
+
+'''
+
+class EmailForm(forms.ModelForm):
+    class Meta:
+        model = Invite
+        fields = ['invite_id', 'sender_username', 'rec_username', 'course_id', 'expires_on']
+'''
