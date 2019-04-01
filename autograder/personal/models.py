@@ -22,7 +22,7 @@ class Courses(models.Model):
         validators=[MinValueValidator(1)])
     instructor_username = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         limit_choices_to={'groups__name': "Instructor"},
         blank=False,
         null=False,
@@ -47,7 +47,7 @@ def one_month_from_today():
 class Invite(models.Model):
     sender_username = models.ForeignKey(
             User,
-            on_delete=models.DO_NOTHING,
+            on_delete=models.CASCADE,
             limit_choices_to={'groups__name': "Instructor"},
             blank=False,
             null=False,
@@ -56,7 +56,7 @@ class Invite(models.Model):
             verbose_name='from')
     rec_username = models.ForeignKey(
             User,
-            on_delete=models.DO_NOTHING,
+            on_delete=models.CASCADE,
             blank=False,
             null=False,
             to_field='username',
@@ -82,7 +82,8 @@ class Invite(models.Model):
         ordering = ['-expires_on', 'sender_username', ]
 
     def __str__(self):
-        return f'{self.get_level_of_invite_display()} Invite for {self.rec_username} ({self.course_id})'
+        return f'{self.get_level_of_invite_display()} \
+            Invite for {self.rec_username} ({self.course_id})'
 
 
 class Assignment(models.Model):
@@ -108,13 +109,13 @@ class Assignment(models.Model):
 
 class Submission(models.Model):
     assignment_id = models.ForeignKey(
-        'Assignment', models.DO_NOTHING, blank=False, null=False)
+        'Assignment', models.CASCADE, blank=False, null=False)
     submitted_user = models.ForeignKey(
         User,
         limit_choices_to={'groups__name': "Student"},
         blank=False,
         null=False,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         to_field='username')
     submitted_on = models.DateTimeField(auto_now_add=True)
     submission_number = models.IntegerField(default=1)
@@ -130,13 +131,13 @@ class Submission(models.Model):
 
 class Takes(models.Model):
     course_id = models.ForeignKey(
-        'Courses', models.DO_NOTHING, blank=False, null=False)
+        'Courses', models.CASCADE, blank=False, null=False)
     student_username = models.ForeignKey(
         User,
         limit_choices_to={'groups__name': "Student"},
         blank=False,
         null=False,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         to_field='username')
     is_grader_in_course = models.BooleanField(default=False, null=True)
 
@@ -145,7 +146,8 @@ class Takes(models.Model):
         ordering = ['course_id__course_number', ]
 
     def __str__(self):
-        takes_record = f'CIS{self.course_id.course_number} - {self.student_username}'
+        takes_record = f'CIS{self.course_id.course_number} \
+            - {self.student_username}'
         if(self.is_grader_in_course):
             takes_record += '(Grader)'
         return takes_record

@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300i,400,700,900');
+
 html, body {
   height: 100%;
   width: 100%;
   font-family: sans-serif;
-  background-color: #D8D7D7;
+  background-color: rgba(235,235,235,1);
 }
 
 .content {
@@ -18,13 +20,9 @@ html, body {
 }
 
 .course {
-  background-color: rgba(240,240,240,.8);
+  background-color: rgba(255,255,255,.6);
   min-height:auto;
   height: 100%;
-}
-
-.course:hover {
-  background-color: rgba(240,240,240,1);
 }
 
 .course a:hover {
@@ -45,7 +43,7 @@ html, body {
 .invite-count{
   color: red;
   font-size:12px;
-  font-weight:bold;
+  font-weight: 700;
   position: relative;
   left: -5px;
   top: -7px;
@@ -63,25 +61,27 @@ html, body {
 
 .edit {
   float: right;
-  background-color: rgba(255,255,255,1);
+  background-color: rgba(50,50,50,1);
   border: 0;
   border-radius: 15px;
   margin: 0; padding: 0;
 }
 
+a.btn, a.btn-info, a.btn-sm {
+  background-color: rgba(50,50,50,1);
+}
+
+.edit .glyphicon {
+  color: #fff;
+}
+
 .edit button:hover, .btn-info {
-  background-color: rgba(125,125,155,1);
   border-radius: 15px;
 }
 
 .course ul {
   list-style-type: none;
-  font-family: monospace;
   font-size: .9em;
-}
-
-.course ul li a {
-  font-weight: normal;
 }
 
 .course-nav {
@@ -93,10 +93,12 @@ html, body {
 
 .course-nav a {
   color: rgba(255,255,255,1);
+  font-weight: 200;
 }
 
 .course-nav li:hover a {
   color: rgba(0,0,0,1);
+  font-weight: 700;
 }
 
 .course-nav li {
@@ -108,8 +110,13 @@ html, body {
   text-align: center;
 }
 
+a {
+  font-family: Roboto;
+  font-weight:900;
+}
+
 .course-nav li:hover {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(255,255,255,.3);
 }
 
 .col {
@@ -141,6 +148,7 @@ html, body {
   width: 100%;
   position: fixed;
   top: 0%; left: 0%;
+  font-family: Barlow,sans-serif;
   margin: 0; padding: 0;
   background-color: rgba(0,0,0,.8);
   color: #fff;
@@ -148,6 +156,16 @@ html, body {
   border-radius: 0px;
   opacity: 1.0;
   z-index: 5;
+}
+
+.navbar a, .navbar a:hover, .course a, .course a:hover {
+  font-family: Roboto;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+a.navbar-brand, a.navbar-brand:hover {
+  font-size: 1.75em;
 }
 
 .course-action {
@@ -167,9 +185,10 @@ html, body {
   width: 100%;
   padding: 2%;
   border: none;
-  float:left;
-  color: #fff;
-  background-color: rgba(25,25,25,.2);
+  float: left;
+  color: rgba(188,71,106,1);
+  font-weight: 300;
+  background-color: rgba(200,200,200,1);
 }
 
 .course-detail {
@@ -178,7 +197,7 @@ html, body {
 }
 
 .glyphicon {
-  color: rgba(100,100,175,1);
+  color: rgba(138,21,56,1);
 }
 
 .navbar .glyphicon {
@@ -190,14 +209,21 @@ html, body {
 }
 
 .btn:hover {
-  background-color: rgba(25,25,50,1);
+  background-color: #8a1538;
 }
 
-.small, .course_nav ul li a {
-  float: right;
-  color: grey;
+h3 .small {
+  font-size: .4em;
+  color: rgba(0,0,0,.4);
+  position: absolute;
+  left: 1%;
+  top: 2%;
+}
+
+.small {
+  color: rgba(0,0,0,.5);
   text-transform: uppercase;
-  font-size: .8em;
+  font-size: .7em;
   font-family: monospace;
 }
 
@@ -206,11 +232,35 @@ html, body {
 }
 
 h1,h3,h5,h1 a, h3 a, h5 a, h2 a:hover, h4 a:hover, h6 a:hover {
-  color: rgba(25,25,50,1);
+  color: rgba(138,21,56,1);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
 }
 
 h2,h4,h6,h2 a,h4 a, h6 a,a:hover,h1 a,h3 a,h5 a {
-  color: rgba(100,100,155,1);
+  color: rgba(158,41,76,1);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+}
+
+a, a:hover, a:active {
+  color: black;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus,
+.btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: none;
+  box-shadow:none;
+}
+
+.btn-info.active.focus, .btn-fino.active:focus, .btn-info.focus,
+.btn-info:active.focus, .btn-info:active:focus, .btn-info:focus {
+  background-color: rgba(188,71,106,1);
+}
+
+h3 a i, h4 i {
+  rgba(188,71,106,1);
+  font-weight: 300;
 }
 
 .important {
@@ -233,10 +283,57 @@ ul.assignments ul {
   background-color: rgba(255,255,255,.5);
 }
 
+li a:hover {
+  text-decoration: none;
+}
+
+form {
+  background-color: rgba(150,150,150,.4);
+  padding: 1%;
+  border-radius: 5px 0px;
+}
+
+form input[type=submit], button[type=submit] {
+    border-radius: 5px;
+    border: none;
+    color: rgba(255,255,255,1);
+    background-color: rgba(138,21,56,1);
+    margin: 1% 0% 0% 0%;
+    position: relative;
+    left: 33%;
+    width: 33%;
+    font-weight: bold;
+}
+
+form input[type=submit]:hover {
+  color: rgba(0,0,0,1);
+  background-color: rgba(255,255,255,1);
+}
+
 form p label {
   width: 25%;
 }
 
 form p input {
   width: 70%;
+  padding: 10px;
+  margin: 5px;
+}
+
+select, form input[type=text], form input[type=number],
+form input[type=password] {
+  border: none;
+  background-color: rgba(255,255,255,.7);
+  border-radius: 15px;
+  padding: 0px 10px;
+}
+
+select:focus, form input[type=text]:focus, form input[type=number]:focus,
+form input[type=password]:focus {
+  background-color: white;
+  border: 0;
+  transition: ease-in-out, background-color, width .75s ease-in-out;
+  outline: none;
+  font-weight:bold;
+  box-shadow:none;
 }

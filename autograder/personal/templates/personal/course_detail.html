@@ -7,7 +7,7 @@
   <div class="col-lg-2">
   <ul class="course-nav">
     <li><a href="">Course Details</a></li>
-    <li><a href="#project">Course Pojects</a></li>
+    <li><a href="#project">Course Projects</a></li>
     {% if user|is_instructor:course %}
     <li><a href="#roster">Student Roster</a></li>
     {% endif %}
@@ -23,7 +23,7 @@
   <span class="small">[<i>Instructor:</i>
     <b>{{ course.instructor_username }}</b>
     {% if course.instructor_username.last_name %}
-      (Professor {{ course.instructor_username.last_name }})
+      (Dr. {{ course.instructor_username.last_name }})
     {% endif %}
 
     {% if course.instructor_username.email %}

@@ -2,10 +2,11 @@ from django.test import TestCase
 from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from personal.models import Courses
+from http.cookies import SimpleCookie
 
 
 class InstructorHomePageViewTest(TestCase):
-    fixtures = ['initial_data.json', ]
+    fixtures = ['initial_auth.json', ]
 
     @classmethod
     def setUpTestData(cls):
@@ -77,3 +78,23 @@ class InstructorHomePageViewTest(TestCase):
         response = self.client.get(reverse('homepage'), follow=True)
         course_count_displayed = len(response.context['course_list'])
         self.assertEqual(course_count_displayed, 4)
+
+    def test_can_set_and_flush_cookie(self):
+        session = self.client.session
+        session['test_cookie'] = 'True'
+        session.save()
+
+        self.assertEqual(session['test_cookie'], 'True')
+        session.flush()
+        self.assertTrue(not session.__contains__('test_cookie'))
+
+    def test_logout_timeout(self):
+        login = self.client.login(username='testuser1', password='password')
+        response = self.client.get(reverse('homepage'), follow=True)
+        session = self.client.session
+
+        # view should check cookies and redirect to logout
+        self.assertTrue(session.__contains__('is_active'))
+        session.flush()
+        response = self.client.get(reverse('homepage'), follow=True)
+        self.assertTemplateUsed(response, 'registration/login.html')

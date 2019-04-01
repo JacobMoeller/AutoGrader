@@ -5,8 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from personal.forms import InviteForm
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect, Http404
 
 
 @login_required()
@@ -68,11 +67,11 @@ class CoursesUpdate(UpdateView):
     success_url = reverse_lazy('homepage')
 
     def get_object(self, *args, **kwargs):
-        obj = super(CoursesUpdate, self).get_object(*args, **kwargs)
-        if obj.instructor_username != self.request.user:
+        course = super(CoursesUpdate, self).get_object(*args, **kwargs)
+        if course.instructor_username != self.request.user:
             raise PermissionDenied("You don't have permission \
                 to edit this course.")
-        return obj
+        return course
 
 
 class CoursesDelete(DeleteView):
@@ -83,10 +82,11 @@ class CoursesDelete(DeleteView):
     success_url = reverse_lazy('homepage')
 
     def get_object(self, *args, **kwargs):
-        obj = super(CoursesDelete, self).get_object(*args, **kwargs)
-        if obj.instructor_username != self.request.user:
+        course = super(CoursesDelete, self).get_object(*args, **kwargs)
+        if course.instructor_username != self.request.user:
             raise PermissionDenied("You don't have permission \
                 to delete this course.")
+        return course
 
 
 @login_required()
@@ -96,15 +96,16 @@ def create_invite(request, pk):
     '''
     course = get_object_or_404(Courses, pk=pk)
     if course.instructor_username != request.user:
-        raise PermissionDenied("You do not have permission \
+        raise PermissionDenied("You don't have permission \
             to create an invite for this course.")
 
+    # Handle GET requests, pass to the form the current user and course objs.
     if request.method == 'GET':
-        rec_list = User.objects.all().exclude(username=request.user)
         form = InviteForm(
             sender_username=request.user,
             course_id=course)
 
+    # Handles POST requests; saves POSTed data and redirects to course detail.
     if request.method == 'POST':
         form = InviteForm(
             sender_username=request.user,
@@ -125,7 +126,10 @@ def course_detail(request, pk):
     ''' Detail view for course. Restricts view to authenticated users who are
     taking the course (as a student or grader) or teaching the course.
     '''
-    course = Courses.objects.get(pk=pk)
+    try:
+        course = Courses.objects.get(pk=pk)
+    except Courses.DoesNotExist:
+        raise Http404('Course does not exist.')
     try:
         if course.instructor_username != request.user:
             Takes.objects.get(course_id=pk, student_username=request.user)

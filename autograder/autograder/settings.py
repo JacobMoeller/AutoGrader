@@ -10,13 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os, sys
+import os
+import sys
+from distutils.util import strtobool
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = strtobool(os.environ.get('DEBUG'))
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -24,13 +27,13 @@ DEBUG = True
 SECRET_KEY = 'a-ac#o7=!ex9hb6h@4+d_z(9n-$$wle*#+a*7x5ma+cx_dvng2h'
 
 if DEBUG is False:
-    SECRET_KEY = os.environ('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: not for production; changed for Windows configs
 ALLOWED_HOSTS = ['*']
 
-if DEBUG is False:
-    ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -42,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig'
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -86,7 +89,7 @@ DATABASES = {
     'PORT': '3306',
     'TEST': {
         'NAME': 'test_djangodocker_db',
-        },
+    }
   }
 }
 
@@ -94,7 +97,7 @@ DATABASES = {
 # thorough testing before being pushed into main repo.
 DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 
-if 'test' in sys.argv and DEBUG is True:
+if TESTING and DEBUG:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['TEST']['NAME'] = '/dev/shm/autograder.test.db.sqlite3'
 
@@ -102,13 +105,14 @@ if DEBUG is False:
     DATABASES = {
       'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ('MYSQL_DATABASE'),
-        'USER': os.environ('MYSQL_USER'),
-        'PASSWORD': os.environ('MYSQL_PASSWORD'),
-        'HOST': 'db',
+        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'HOST': os.environ.get('MYSQL_HOST'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
         'PORT': '3306',
       }
     }
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -132,13 +136,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -147,7 +147,10 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Session based information
-SESSION_EXPIRY = 3600
+TIMEOUT = 15 * 60  # in minutes
+SESSION_COOKIE_AGE = TIMEOUT
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
