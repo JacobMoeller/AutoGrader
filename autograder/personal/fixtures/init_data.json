@@ -1,0 +1,950 @@
+[
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Course",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "add_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Course",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "change_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Course",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "delete_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Course",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "view_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add invite",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "add_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change invite",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "change_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete invite",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "delete_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view invite",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "view_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add assignment",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "add_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change assignment",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "change_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete assignment",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "delete_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view assignment",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "view_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add submission",
+        "content_type": [
+            "personal",
+            "submission"
+        ],
+        "codename": "add_submission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change submission",
+        "content_type": [
+            "personal",
+            "submission"
+        ],
+        "codename": "change_submission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete submission",
+        "content_type": [
+            "personal",
+            "submission"
+        ],
+        "codename": "delete_submission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view submission",
+        "content_type": [
+            "personal",
+            "submission"
+        ],
+        "codename": "view_submission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add takes",
+        "content_type": [
+            "personal",
+            "takes"
+        ],
+        "codename": "add_takes"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change takes",
+        "content_type": [
+            "personal",
+            "takes"
+        ],
+        "codename": "change_takes"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete takes",
+        "content_type": [
+            "personal",
+            "takes"
+        ],
+        "codename": "delete_takes"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view takes",
+        "content_type": [
+            "personal",
+            "takes"
+        ],
+        "codename": "view_takes"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add assignment",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "add_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change assignment",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "change_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete assignment",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "delete_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view assignment",
+        "content_type": [
+            "personal",
+            "courses"
+        ],
+        "codename": "view_assignment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add courses",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "add_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change courses",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "change_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete courses",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "delete_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view courses",
+        "content_type": [
+            "personal",
+            "invite"
+        ],
+        "codename": "view_courses"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add invite",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "add_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change invite",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "change_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete invite",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "delete_invite"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view invite",
+        "content_type": [
+            "personal",
+            "assignment"
+        ],
+        "codename": "view_invite"
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Instructor",
+        "permissions": [
+            [
+                "add_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "change_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "delete_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "view_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "add_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "change_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "delete_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "view_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "add_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "change_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "delete_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "view_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "add_takes",
+                "personal",
+                "takes"
+            ],
+            [
+                "change_takes",
+                "personal",
+                "takes"
+            ],
+            [
+                "delete_takes",
+                "personal",
+                "takes"
+            ],
+            [
+                "view_takes",
+                "personal",
+                "takes"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Student",
+        "permissions": [
+            [
+                "view_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "view_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "view_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "add_submission",
+                "personal",
+                "submission"
+            ],
+            [
+                "view_submission",
+                "personal",
+                "submission"
+            ],
+            [
+                "view_takes",
+                "personal",
+                "takes"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Grader",
+        "permissions": [
+            [
+                "view_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "view_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "view_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "view_submission",
+                "personal",
+                "submission"
+            ],
+            [
+                "view_takes",
+                "personal",
+                "takes"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Admin",
+        "permissions": [
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "view_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "view_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "view_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "view_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "view_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_assignment",
+                "personal",
+                "assignment"
+            ],
+            [
+                "delete_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "view_assignment",
+                "personal",
+                "assignment"
+            ],
+            [
+                "view_invite",
+                "personal",
+                "assignment"
+            ],
+            [
+                "delete_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "delete_courses",
+                "personal",
+                "courses"
+            ],
+            [
+                "view_assignment",
+                "personal",
+                "courses"
+            ],
+            [
+                "view_courses",
+                "personal",
+                "courses"
+            ],
+            [
+                "add_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "add_invite",
+                "personal",
+                "invite"
+            ],
+            [
+                "change_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "change_invite",
+                "personal",
+                "invite"
+            ],
+            [
+                "delete_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "delete_invite",
+                "personal",
+                "invite"
+            ],
+            [
+                "view_courses",
+                "personal",
+                "invite"
+            ],
+            [
+                "view_invite",
+                "personal",
+                "invite"
+            ],
+            [
+                "delete_submission",
+                "personal",
+                "submission"
+            ],
+            [
+                "view_submission",
+                "personal",
+                "submission"
+            ],
+            [
+                "delete_takes",
+                "personal",
+                "takes"
+            ],
+            [
+                "view_takes",
+                "personal",
+                "takes"
+            ]
+        ]
+    }
+}
+]
