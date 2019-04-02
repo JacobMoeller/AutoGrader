@@ -10,44 +10,23 @@
 # (To use in lab, append `-f lab.yml` as well before the build command.)
 version: "2.1"
 
-networks:
-  # Construct a private network for the Django server and
-  # database server to communicate on
-  infrastructure:
-    external: false
-
 services:
   django:
     restart: always
-    build: ./docker/django/
     image: django:prod
-    volumes:
-      - ${PWD}:/usr/src/app
     environment:
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
       - SECRET_KEY
-    ports:
-      - 8080:8000
+      - DEBUG
     container_name: "django"
-    networks:
-      # Join the infrastructure network
-      - infrastructure
-    depends_on:
-      - db
- 
+
   db:
-    build: ./docker/mysql/
     image: mysql:prod
-    volumes:
-      - ${PWD}/db:/var/lib/mysql # should be different?
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
     container_name: "mysql"
-    networks:
-      # Join the infrastructure network
-      - infrastructure

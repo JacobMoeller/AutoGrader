@@ -8,7 +8,7 @@
 version: "2.1"
 services:
   django:
-#    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
     image: django:lab
     container_name: "django_${HOST_USER_ID}_${HOST_GROUP_ID}"
     ports:
@@ -16,5 +16,5 @@ services:
 
   db:
     image: mysql:lab
- #   user: ${HOST_USER_ID}:${HOST_GROUP_ID}
+    user: ${HOST_USER_ID}:${HOST_GROUP_ID}
     container_name: "mysql_${HOST_USER_ID}_${HOST_GROUP_ID}"

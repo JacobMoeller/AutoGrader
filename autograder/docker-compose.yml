@@ -24,6 +24,10 @@ services:
       - 8080:8000
     container_name: "django_dev"
     environment:
+      - DEBUG=True
+      - MYSQL_DATABASE=djangodocker_db
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
       - PYTHONUNBUFFERED=1
     networks:
       # Join the infrastructure network
