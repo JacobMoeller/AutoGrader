@@ -99,7 +99,7 @@
                     </li>
                     {% if request.user|is_instructor:course %}
                       <li>
-                        <a href="{% url 'create_invite' course.id %}" class="btn btn-info btn-sm">
+                        <a href="{% url 'invite_create' course.id %}" class="btn btn-info btn-sm">
                         <span class="glyphicon glyphicon-envelope"></span> Invite
                       </a>
                       </li>
@@ -150,8 +150,8 @@
         <div class="invite col-lg-5">
 
         <div class="edit">
-        <button class="btn btn-link btn-sm" href="#">
-          <a href="#" class="action">
+        <button class="btn btn-link btn-sm">
+          <a href="{% url 'invite_delete' invite.pk %}" class="action">
           <span class="glyphicon glyphicon-trash">
           </span>
           </a>

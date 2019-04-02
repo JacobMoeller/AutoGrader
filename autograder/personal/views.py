@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from personal.forms import InviteForm
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.models import Group
 
 
 @login_required()
@@ -35,7 +36,11 @@ def index(request):
 def contact(request):
     return render(
         request, 'personal/basic.html',
-        {'content': ['If you would like to contact me, please email me.','moellej200@potsdam.edu']})
+        {'content':
+            ['If you would like to contact me, please email me.',
+                'moellej200@potsdam.edu']})
+
+# COURSES #####################################################################
 
 
 class CoursesCreate(CreateView):
@@ -79,6 +84,7 @@ class CoursesDelete(DeleteView):
     who try to delete a course for which they are not the instructor.
     '''
     model = Courses
+    template_name = "personal/confirm_delete.html"
     success_url = reverse_lazy('homepage')
 
     def get_object(self, *args, **kwargs):
@@ -138,3 +144,24 @@ def course_detail(request, pk):
             to view this course.")
 
     return render(request, 'personal/course_detail.html', {'course': course})
+
+# INVITES #####################################################################
+
+
+class InviteDelete(DeleteView):
+    ''' Deletes a course, forces confirmation of delete. Throws error for users
+    who try to delete a course for which they are not the instructor.
+    '''
+    model = Invite
+    template_name = "personal/confirm_delete.html"
+    success_url = reverse_lazy('homepage')
+
+    def get_object(self, *args, **kwargs):
+        invite = super(InviteDelete, self).get_object(*args, **kwargs)
+        group = Group.objects.get(name="Admin")
+        is_admin = True if group in self.request.user.groups.all() else False
+
+        if invite.rec_username != self.request.user and not is_admin:
+            raise PermissionDenied("You don't have permission \
+                to delete this invitation.")
+        return invite
