@@ -1,6 +1,8 @@
 <!-- This HTML file creates the navigation bar, as well as the general look of the website.
 	 it is extended into every .html file-->
 
+{% load personal_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,6 +49,9 @@
                 </li>
                   {% if user.is_staff %}
                     <li><a href='/admin/'>Site Admin</a></li>
+                  {% endif %}
+                  {% if request.user|has_group:"Instructor" %}
+                    <li><a href='/email/'>Email</a></li>
                   {% endif %}
                 <li>
                   <a href="">

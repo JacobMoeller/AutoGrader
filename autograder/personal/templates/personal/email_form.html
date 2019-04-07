@@ -2,8 +2,11 @@
 
 {% include 'base.html' %}
 
+{% load personal_extras %}
+
 {% block content %}
-{% if user.is_authenticated %}
+
+{% if request.user|has_group:"Instructor" %}
   <h1>Add student to join the Autograder</h1>
 
   <p>Enter student's email.</p>
@@ -13,7 +16,7 @@
       <input id="submit" type="submit" value="Send" />
     </form>
 {% else %}
-    <p>Please login to invite students to the Autograder</p>
+    <p>Please login as an Instructor to invite students to the Autograder</p>
     <a href="{% url 'login' %}">login</a>
 {% endif %}
 
