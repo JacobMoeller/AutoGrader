@@ -6,7 +6,8 @@ from http.cookies import SimpleCookie
 
 
 class InstructorHomePageViewTest(TestCase):
-    fixtures = ['initial_auth.json', ]
+    fixtures = ['init_data.json', 'test_data_auth.json',
+        'test_data.json', ]
 
     @classmethod
     def setUpTestData(cls):
@@ -35,8 +36,8 @@ class InstructorHomePageViewTest(TestCase):
         for course_id in range(number_of_courses):
             cls.course = Courses.objects.create(
                 course_title = f'CIS_201 {course_id}',
-                course_number=405, id=course_id,
-                course_crn=12345+course_id,
+                course_number=405, id=course_id+200,
+                course_crn=12346+course_id,
                 instructor_username=cls.test_user1,
             )
             cls.course.save()
@@ -94,7 +95,6 @@ class InstructorHomePageViewTest(TestCase):
         session = self.client.session
 
         # view should check cookies and redirect to logout
-        self.assertTrue(session.__contains__('is_active'))
         session.flush()
         response = self.client.get(reverse('homepage'), follow=True)
         self.assertTemplateUsed(response, 'registration/login.html')
