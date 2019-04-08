@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from personal.models import Courses
 from http.cookies import SimpleCookie
+from personal.models import Courses, Invite, Takes
+from django.contrib.auth.models import Group, Permission
 
 
 class InstructorHomePageViewTest(TestCase):
@@ -12,6 +14,10 @@ class InstructorHomePageViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
 
+        # Create two users
+        # cls.test_group1 = Group.objects.create(name='Instructor')
+        # cls.test_group1 = Group.objects.create(name='Student')
+        # cls.test_group1 = Group.objects.create(name='Grader')
         # Create two users
         cls.test_user1 = User.objects.create_user(
             username='testuser1',
@@ -35,12 +41,20 @@ class InstructorHomePageViewTest(TestCase):
         number_of_courses = 4
         for course_id in range(number_of_courses):
             cls.course = Courses.objects.create(
-                course_title = f'CIS_201 {course_id}',
+                course_title=f'CIS_201 {course_id}',
                 course_number=405, id=course_id+200,
                 course_crn=12346+course_id,
                 instructor_username=cls.test_user1,
             )
             cls.course.save()
+
+        cls.invite = Invite.objects.create(
+                id=1,
+                sender_username=User.objects.get(username='testuser1'),
+                rec_username=User.objects.get(username='testuser2'),
+                course_id=Courses.objects.get(id=1)
+            )
+        cls.invite.save()
 
 
     # Tests to see if the url is correct
@@ -98,3 +112,13 @@ class InstructorHomePageViewTest(TestCase):
         session.flush()
         response = self.client.get(reverse('homepage'), follow=True)
         self.assertTemplateUsed(response, 'registration/login.html')
+
+    # Tests to see if the url is correct
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+    # Tests to see if the url name is accessible
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('homepage'), follow=True)
+        self.assertEqual(response.status_code, 200)
