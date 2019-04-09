@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from personal.forms import InviteForm
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.conf import settings
 from django.core.mail import send_mail
 
@@ -188,22 +188,38 @@ class InviteDelete(DeleteView):
         return invite
 
 
+# Generates a random password to give the student before he/she/it
+# changes it to something that django will probably reject.
+# at least a couple times.
+def password_generate():
+    password = User.objects.make_random_password()
+    return password
+# Alex Pendell :: April 9th, 2019
+
+
 # View for sending email invites
 def email(request):
-    print("At the email page")
-
-    # Open a file for debug purposes.
-    f_debug = open("debug.txt", "w")
-    f_debug.write("Outside the if statement")
+    # A test "Hello!" to see if we're getting inside the method
+    print("Hello!")
     if request.method == 'POST':
-        # Check to see if we're in the If statement within email()
-        f_debug.write("Inside the If statement.")
-
+        newpassword = password_generate()
         recepient = request.POST['user']
+
         message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
+
         send_mail('Invite to join the Potsdam Autograder',
-            'This is an autograder message', # The content.
+            'This is an autograder message. Your password is: ' + newpassword, # The content.
             settings.EMAIL_HOST_USER, # The sender
             [recepient], # The recipient
             fail_silently = False) # Whether or not we want to see errors
+
+        ## This bit will create the account for the user ##
+        user = User.objects.create_user(username = recipient, email = recipient,
+                                        password = newpassword)
+
+        # Print the user (maybe). User might not have a toString() function.
+        print(user)
+
+
     return render(request, 'personal/email_form.html')
+# Alex :: April 9th, 2019
