@@ -205,15 +205,18 @@ def email(request):
         recipient = request.POST['user']
         message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
 
-        send_mail('Invite to join the Potsdam Autograder',
-            'This is an autograder message. Your password is: ' + newpassword, # The content.
-            settings.EMAIL_HOST_USER, # The sender
-            [recipient], # The recipient
-            fail_silently = False) # Whether or not we want to see errors
+        if recipient[recipient.find('@'):] != '@potsdam.edu':
+            reverse_lazy('homepage')
+        else:
+            send_mail('Invite to join the Potsdam Autograder',
+                'This is an autograder message. Your password is: ' + newpassword, # The content.
+                settings.EMAIL_HOST_USER, # The sender
+                [recipient], # The recipient
+                fail_silently = False) # Whether or not we want to see errors
 
-        ## This bit will create the account for the user ##
-        user = User.objects.create_user(username = recipient[0:recipient.find('@')], email = recipient,
-                                        password = newpassword)
+            ## This bit will create the account for the user ##
+            user = User.objects.create_user(username = recipient[0:recipient.find('@')], email = recipient,
+                                            password = newpassword)
 
         # Print the user (maybe). User might not have a toString() function.
         print(user)
