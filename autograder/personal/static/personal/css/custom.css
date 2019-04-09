@@ -215,6 +215,9 @@ a.navbar-brand, a.navbar-brand:hover {
 h3 .small {
   font-size: .4em;
   color: rgba(0,0,0,.4);
+}
+
+.pin-left {
   position: absolute;
   left: 1%;
   top: 2%;

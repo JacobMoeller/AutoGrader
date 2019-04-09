@@ -22,7 +22,32 @@ def full_name(user):
 
 @register.filter
 def is_instructor(user, course):
+    return is_primary_instructor(user, course) or \
+        is_secondary_instructor(user, course)
+
+
+@register.filter
+def is_primary_instructor(user, course):
     return True if course.instructor_username == user else False
+
+
+@register.filter
+def is_secondary_instructor(user, course):
+    return Takes.objects.filter(
+        course_id=course,
+        username=user,
+        user_level="i")
+
+
+@register.filter
+def get_user_course_level(user, course):
+    if is_primary_instructor(user, course):
+        return "Primary Instructor"
+    elif is_secondary_instructor(user, course):
+        return "Secondary Instructor"
+    else:
+        return Takes.objects.get(course_id=course, username=user). \
+            get_user_level_display()
 
 
 @register.filter

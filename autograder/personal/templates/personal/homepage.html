@@ -63,8 +63,15 @@
             <h3>
               <a href="{{ course.get_absolute_url }}">
                 <i>{{ course.course_number }}</i> {{course.course_title}}
-                <span class="small">CRN {{course.course_crn}}</span>
+                <span class="small pin-left">CRN {{course.course_crn}}</span>
               </a>
+              <small class="small" style="display:block;">(
+              {% if request.user|is_secondary_instructor:course %}
+                secondary instructor
+              {% else %}
+                {{ request.user|get_user_course_level:course }}
+              {% endif %}
+              )</small>
             </h3>
           <div id="collapse{{ course.id }}" class="collapse">
             <ul class="assignments">
@@ -162,7 +169,7 @@
         <table>
         <tr colspan="2">
           <td>
-            <h3>{{ invite.get_level_of_invite_display }} <i>Invite</i></h3>
+            <h3>{{ invite.get_user_level_display }} <i>Invite</i></h3>
             <h4>
             <i>{{ invite.course_id.course_number }}</i>
             {{ invite.course_id.course_title }}

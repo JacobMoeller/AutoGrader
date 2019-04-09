@@ -28,12 +28,11 @@ def index(request):
             invite_id = request.POST.get('invite_name')
             # Gets invite based in invite id
             invite = Invite.objects.get(id=invite_id)
-
             # Places user into course specified in invite model
             Takes.objects.create(
-                student_username=request.user,
+                username=request.user,
                 course_id=Courses.objects.get(id=invite.course_id.id),
-                level_in_course=invite.level_of_invite)
+                user_level=invite.user_level)
             # Removes invite instance, so it cannot be accepted multiple times
             Invite.objects.filter(id=invite_id).delete()
 
@@ -41,17 +40,10 @@ def index(request):
         username = request.user.get_username()
         # gets current list of invites for user
         invite_list = Invite.objects.filter(rec_username=username)
-        # gets list of courses; depends on if user is instructor or student
-        if (request.user.groups.filter(name='Instructor')):
-            course_list = Courses.objects.filter(instructor_username=username)
+        take_list = Takes.objects.filter(username=username).values_list('course_id', flat=True)
+        course_list = Courses.objects.filter(instructor_username=username)
 
-        else:
-            take_list = Takes.objects.filter(student_username=username)
-            course_list = []
-            for take in take_list:
-                course_list.append(take.course_id)
-
-    # gives the render context
+        course_list = course_list | Courses.objects.filter(id__in=take_list)
     args = {'course_list': course_list, 'invite_list': invite_list}
     return render(request, 'personal/homepage.html', args)
 
@@ -164,7 +156,7 @@ def course_detail(request, pk):
         raise Http404('Course does not exist.')
     try:
         if course.instructor_username != request.user:
-            Takes.objects.get(course_id=pk, student_username=request.user)
+            Takes.objects.get(course_id=pk, username=request.user)
     except Takes.DoesNotExist:
         raise PermissionDenied("You do not have permission \
             to view this course.")
