@@ -53,6 +53,9 @@ If you'd like to run tests with mysql, before merging code to the main repo, it 
 docker-compose exec db bash
 ```
 
+>> THIS IS A NOTE TO DEVELOPERS. (Mainly Alex...):
+docker-compose -f lab.yml -f docker-compose.yml XXX <= This is where you put what you want to do afterwards.
+
 This will open a shell in the django container. You can then access the mysql client with the following:
 
 ```

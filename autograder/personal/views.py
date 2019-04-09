@@ -200,21 +200,19 @@ def password_generate():
 # View for sending email invites
 def email(request):
     # A test "Hello!" to see if we're getting inside the method
-    print("Hello!")
     if request.method == 'POST':
         newpassword = password_generate()
-        recepient = request.POST['user']
-
+        recipient = request.POST['user']
         message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
 
         send_mail('Invite to join the Potsdam Autograder',
             'This is an autograder message. Your password is: ' + newpassword, # The content.
             settings.EMAIL_HOST_USER, # The sender
-            [recepient], # The recipient
+            [recipient], # The recipient
             fail_silently = False) # Whether or not we want to see errors
 
         ## This bit will create the account for the user ##
-        user = User.objects.create_user(username = recipient, email = recipient,
+        user = User.objects.create_user(username = recipient[0:recipient.find('@')], email = recipient,
                                         password = newpassword)
 
         # Print the user (maybe). User might not have a toString() function.
