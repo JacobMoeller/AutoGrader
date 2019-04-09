@@ -4,7 +4,9 @@
 local_settings.py
 db.sqlite3
 media
-static
+/static/
+
+/db/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

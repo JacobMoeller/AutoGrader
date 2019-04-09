@@ -8,6 +8,7 @@ if __name__ == '__main__':
         from django.core.management import execute_from_command_line
         if len(sys.argv) >= 2:
             if sys.argv[1] == 'migrate':
+                execute_from_command_line(['manage.py', 'migrate'])
                 execute_from_command_line(['manage.py', 'chgroups', 'load'])
             elif sys.argv[1] == "runserver":
                 execute_from_command_line(sys.argv)

@@ -45,7 +45,7 @@
                   My Assignments
                   </a>
                 </li>
-                  {% if user.is_superuser %}
+                  {% if user.is_staff %}
                     <li><a href='/admin/'>Site Admin</a></li>
                   {% endif %}
                 <li>

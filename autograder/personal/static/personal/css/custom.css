@@ -21,8 +21,8 @@ html, body {
 
 .course {
   background-color: rgba(255,255,255,.6);
-  min-height:auto;
-  height: 100%;
+  height: 250px;
+  overflow-y: auto;
 }
 
 .course a:hover {
@@ -339,4 +339,25 @@ form input[type=password]:focus {
   outline: none;
   font-weight:bold;
   box-shadow:none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px grey;
+  border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(138,21,56,1);
 }
