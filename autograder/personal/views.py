@@ -187,7 +187,6 @@ class InviteDelete(DeleteView):
                 to delete this invitation.")
         return invite
 
-
 # Generates a random password to give the student before he/she/it
 # changes it to something that django will probably reject.
 # at least a couple times.
@@ -201,12 +200,15 @@ def password_generate():
 def email(request):
     # A test "Hello!" to see if we're getting inside the method
     if request.method == 'POST':
+        
         newpassword = password_generate()
         recipient = request.POST['user']
-        message = 'Hello, You have been invited to join the SUNY Potsdam Autograder. Follow this link to sign up.'
+        alias = recipient[0:recipient.find('@')]
 
         if recipient[recipient.find('@'):] != '@potsdam.edu':
-            reverse_lazy('homepage')
+            print("The yeast is burbing.")
+        else if User.objects.filter(username = alias).exists():
+            print("There's a snake in my boot.")
         else:
             send_mail('Invite to join the Potsdam Autograder',
                 'This is an autograder message. Your password is: ' + newpassword, # The content.
@@ -215,12 +217,8 @@ def email(request):
                 fail_silently = False) # Whether or not we want to see errors
 
             ## This bit will create the account for the user ##
-            user = User.objects.create_user(username = recipient[0:recipient.find('@')], email = recipient,
+            user = User.objects.create_user(username = alias, email = recipient,
                                             password = newpassword)
-
-        # Print the user (maybe). User might not have a toString() function.
-        print(user)
-
 
     return render(request, 'personal/email_form.html')
 # Alex :: April 9th, 2019
