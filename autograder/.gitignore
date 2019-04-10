@@ -2,11 +2,16 @@
 *.log
 *.pot
 local_settings.py
-db.sqlite3
 media
 /static/
-
 /db/
+
+# Linux/build artifacts
+debug.txt
+.nfs*
+.fuse_hidden*
+.directory
+.Trash-*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
