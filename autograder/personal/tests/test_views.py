@@ -49,10 +49,11 @@ class InstructorHomePageViewTest(TestCase):
             cls.course.save()
 
         cls.invite = Invite.objects.create(
-                id=1,
+                id=4000,
                 sender_username=User.objects.get(username='testuser1'),
                 rec_username=User.objects.get(username='testuser2'),
-                course_id=Courses.objects.get(id=1)
+                course_id=Courses.objects.get(id=1),
+                user_level="Student"
             )
         cls.invite.save()
 
@@ -114,9 +115,9 @@ class InstructorHomePageViewTest(TestCase):
         self.assertTemplateUsed(response, 'registration/login.html')
 
     # Tests to see if the url is correct
-    def test_view_url_exists_at_desired_location(self):
+    def test_view_url_redirects_at_index(self):
         response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     # Tests to see if the url name is accessible
     def test_view_url_accessible_by_name(self):

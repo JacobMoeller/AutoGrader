@@ -19,26 +19,26 @@ class InviteModelTest(TestCase):
             id=1, course_id=Courses.objects.get(id=1),
             sender_username=test_user1,
             rec_username=test_user2,
-            level_of_invite='Instructor')
+            user_level='Instructor')
 
     def test_sender_username_label(self):
         invite = Invite.objects.get(id=1)
         field_label = invite._meta.get_field('sender_username').verbose_name
-        self.assertEquals(field_label, 'from')
+        self.assertEquals(field_label, 'from user')
 
     def test_rec_username_label(self):
         invite = Invite.objects.get(id=1)
         field_label = invite._meta.get_field('rec_username').verbose_name
-        self.assertEquals(field_label, 'to')
+        self.assertEquals(field_label, 'to user')
 
-    def test_level_of_invite_label(self):
+    def test_user_level_label(self):
         invite = Invite.objects.get(id=1)
-        field_label = invite._meta.get_field('level_of_invite').verbose_name
-        self.assertEquals(field_label, 'level of invite')
+        field_label = invite._meta.get_field('user_level').verbose_name
+        self.assertEquals(field_label, 'User level in course')
 
-    def test_level_of_invite_max_length(self):
+    def test_user_level_max_length(self):
         invite = Invite.objects.get(id=1)
-        max_length = invite._meta.get_field('level_of_invite').max_length
+        max_length = invite._meta.get_field('user_level').max_length
         self.assertEquals(max_length, 1)
 
     def test_course_id_references_class(self):
@@ -186,7 +186,7 @@ class TakesModelTest(TestCase):
             course_title='Software Engineering',
             instructor_username=test_user1)
         Takes.objects.create(
-            student_username=test_user2,
+            username=test_user2,
             course_id=Courses.objects.get(id=1))
 
     def test_course_id_references_course(self):

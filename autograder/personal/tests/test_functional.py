@@ -76,11 +76,11 @@ class InstructorHomePageViewTest(TestCase):
         # Add student to CIS 201 (id: 111)
         Takes.objects.create(
             course_id=self.course1,
-            student_username=self.test_user2,
-            is_grader_in_course=False
+            username=self.test_user2,
+            user_level="s"
         ).save()
         self.assertTrue(self.test_user2==Takes.objects.get(
-            course_id=self.course1).student_username)
+            course_id=self.course1).username)
         response = self.client.get(reverse(
             'course_detail', kwargs={'pk': self.course1.id}), follow=True)
         self.assertTemplateUsed(response, 'personal/course_detail.html')
@@ -91,7 +91,7 @@ class InstructorHomePageViewTest(TestCase):
         login = self.client.force_login(self.test_user2)
         with self.assertRaises(Takes.DoesNotExist):
             Takes.objects.get(course_id=self.course2,
-            student_username=self.test_user2)
+            username=self.test_user2)
         response = self.client.get(reverse(
             'course_detail', kwargs={'pk': self.course2.id}), follow=True)
         self.assertTemplateUsed(response, '403.html')

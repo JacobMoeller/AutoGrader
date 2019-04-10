@@ -1,24 +1,25 @@
 {% extends "personal/header.html" %}
-
 {% include 'base.html' %}
-
 {% load personal_extras %}
-
 {% block content %}
 
 {% if request.user|has_group:"Instructor" %}
-  <h1>Add student to join the Autograder</h1>
-
-  <p>Enter student's email.</p>
+<div class="col-lg-4"></div>
+<div class="col-lg-4">
+  <h3>Add student to join the Autograder
+    <a href="#"><small class="small">[Import Roster For Course?]</small></a>
+  </h3>
+  <p>Please enter the student's email.
+  (Only <b>potsdam.edu</b> addresses are permitted.)</p>
   <form method="post" action="{%url 'email' %}">
+    <div class="form-group">
       {% csrf_token %}
-      <textarea name="user" placeholder="student@potsdam.edu"></textarea>
-      <input id="submit" type="submit" value="Send" />
+      <input type="text" name="user" placeholder="student@potsdam.edu"></input>
+      <br />
+      <input id="submit" type="submit" value="Send Invite" />
+    </div>
     </form>
-{% else %}
-    <p>Please login as an Instructor to invite students to the Autograder</p>
-    <a href="{% url 'login' %}">login</a>
+</div>
 {% endif %}
-
 {% include "personal/includes/htmlsnippet.html" %}
 {% endblock %}

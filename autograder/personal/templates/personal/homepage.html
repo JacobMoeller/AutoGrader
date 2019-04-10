@@ -73,7 +73,11 @@
               {% endif %}
               </small>
             </h3>
-          <div id="collapse{{ course.id }}" class="collapse">
+          <div id="collapse{{ course.id }}" class="collapse
+          {% if request.user|get_user_course_level:course == "Grader" or request.user|get_user_course_level:course == "Student" %}
+          in
+          {% endif %}
+          ">
             <ul class="assignments">
               <li><a href="#">Students ({{ course|student_count }})</a></li>
               <li><a href="#">Graders</a></li>

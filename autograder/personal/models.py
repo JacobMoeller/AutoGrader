@@ -21,7 +21,8 @@ class TakingMixin(models.Model):
     course_id = models.ForeignKey(
         'Courses', on_delete=models.CASCADE, blank=False, null=False)
     user_level = models.CharField(
-        max_length=1, choices=GROUP_LEVELS, default='s')
+        max_length=1, choices=GROUP_LEVELS, default='s',
+        verbose_name="User level in course")
 
     class Meta:
         abstract = True
@@ -79,7 +80,7 @@ class Invite(TakingMixin):
             null=False,
             to_field='username',
             related_name='sender',
-            verbose_name='from')
+            verbose_name='from user')
     # Username for the student/grader/instructor being invited; references user in user table
     rec_username = models.ForeignKey(
             User,
@@ -88,7 +89,7 @@ class Invite(TakingMixin):
             null=False,
             to_field='username',
             related_name='receiver',
-            verbose_name='to')
+            verbose_name='to user')
     # specifies an invite will expire in one month
     expires_on = models.DateField(default=one_month_from_today, null=False)
     # timestamp for when the invite was created
@@ -101,6 +102,7 @@ class Invite(TakingMixin):
 
     class Meta:
         ordering = ['-expires_on', 'sender_username', ]
+        unique_together = ('rec_username', 'course_id', 'user_level',)
 
     # defines how the object will be specified as a string
     def __str__(self):
@@ -138,9 +140,7 @@ class Submission(models.Model):
     submitted_user = models.ForeignKey(
         User,
         limit_choices_to={'groups__name': "Student"},
-        blank=False,
-        null=False,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         to_field='username')
     # timestamp for when the assignment was submitted
     submitted_on = models.DateTimeField(auto_now_add=True)
@@ -170,6 +170,8 @@ class Takes(TakingMixin):
     class Meta:
         verbose_name_plural = "Takes"
         ordering = ['course_id__course_number', ]
+        unique_together = ('username', 'course_id', 'user_level',)
+
     # defines how the object will be specified as a string
     def __str__(self):
         takes_record = f'CIS{self.course_id.course_number} \

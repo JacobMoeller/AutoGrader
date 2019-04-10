@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from personal.forms import InviteForm
 from django.core.exceptions import PermissionDenied
+from django.db.models import ProtectedError
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import Group, User
 from django.conf import settings
@@ -139,9 +140,27 @@ def create_invite(request, pk):
             course_id=course,
             data=request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse(
-                'course_detail', kwargs={'pk': course.id}))
+            try:
+                Takes.objects.get(
+                    username=form.data['rec_username'],
+                    course_id=form.course_id,
+                    user_level=form.data['user_level'],
+                )
+                raise PermissionDenied("User is already in course.")
+            except Takes.DoesNotExist:
+                pass
+            try:
+                Invite.objects.get(
+                    rec_username=form.data['rec_username'],
+                    course_id=form.course_id,
+                    user_level=form.data['user_level'],
+                    )
+                raise PermissionDenied("Invite already exists for this user \
+                    and course.")
+            except Invite.DoesNotExist:
+                form.save()
+                return HttpResponseRedirect(reverse(
+                    'course_detail', kwargs={'pk': course.id}))
 
     return render(request, "personal/generic_form.html", {
             'header': 'Invite for ' + str(course), 'form': form}
@@ -196,29 +215,39 @@ def password_generate():
 # Alex Pendell :: April 9th, 2019
 
 
-# View for sending email invites
 def email(request):
-    # A test "Hello!" to see if we're getting inside the method
+    '''
+    View for sending email invites to users. Generates a random password to be
+    sent via email, checks to see if supplied email is a potsdam address.
+    '''
+
     if request.method == 'POST':
-        
         newpassword = password_generate()
         recipient = request.POST['user']
         alias = recipient[0:recipient.find('@')]
 
+        # Validate whether email is from potsdam.edu and throw 403 if not
         if recipient[recipient.find('@'):] != '@potsdam.edu':
-            print("The yeast is burbing.")
-        elif User.objects.filter(username = alias).exists():
+            raise PermissionDenied("Only potsdam.edu email addresses \
+                are allowed.")
+        elif User.objects.filter(username=alias).exists():
+            # Check if user already exists
             print("There's a snake in my boot.")
         else:
-            send_mail('Invite to join the Potsdam Autograder',
-                'This is an autograder message. Your password is: ' + newpassword, # The content.
-                settings.EMAIL_HOST_USER, # The sender
-                [recipient], # The recipient
-                fail_silently = False) # Whether or not we want to see errors
+            # Send an email invite if new user
+            send_mail(
+                'Invite to join the Potsdam Autograder',  # The email title
+                'This is an autograder message. Your password is: '
+                + newpassword,  # The content.
+                settings.EMAIL_HOST_USER,  # The sender
+                [recipient],  # The recipient
+                fail_silently=False)  # Whether or not we want to see errors
 
-            ## This bit will create the account for the user ##
-            user = User.objects.create_user(username = alias, email = recipient,
-                                            password = newpassword)
+            # This bit will create the account for the user #
+            User.objects.create_user(
+                username=alias,
+                email=recipient,
+                password=newpassword)
 
     return render(request, 'personal/email_form.html')
 # Alex :: April 9th, 2019
