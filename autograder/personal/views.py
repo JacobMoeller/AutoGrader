@@ -173,7 +173,11 @@ def course_detail(request, pk):
     taking the course (as a student or grader) or teaching the course.
     '''
     try:
-        course = Courses.objects.get(pk=pk)
+        user_levels = Takes.objects.filter(course_id=pk, username=request.user)
+        if len(user_levels) > 1:
+            course = Courses.objects.filter(pk=pk)[0]
+        else:
+            course = Courses.objects.get(pk=pk)
     except Courses.DoesNotExist:
         raise Http404('Course does not exist.')
     try:

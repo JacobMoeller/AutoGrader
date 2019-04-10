@@ -84,7 +84,7 @@ class Invite(TakingMixin):
     # Username for the student/grader/instructor being invited; references user in user table
     rec_username = models.ForeignKey(
             User,
-            on_delete=models.DO_NOTHING,
+            on_delete=models.CASCADE,
             blank=False,
             null=False,
             to_field='username',
@@ -164,7 +164,7 @@ class Takes(TakingMixin):
         User,
         blank=False,
         null=False,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         to_field='username')
 
     class Meta:

@@ -41,13 +41,15 @@ def is_secondary_instructor(user, course):
 
 @register.filter
 def get_user_course_level(user, course):
+    levels = ""
     if is_primary_instructor(user, course):
-        return "Primary Instructor"
+        levels += "Primary Instructor"
     elif is_secondary_instructor(user, course):
-        return "Secondary Instructor"
+        levels += "Secondary Instructor"
     else:
-        return Takes.objects.get(course_id=course, username=user). \
-            get_user_level_display()
+        for level in Takes.objects.filter(course_id=course, username=user).exclude(user_level="i"):
+            levels += level.get_user_level_display() + " "
+    return levels
 
 
 @register.filter
@@ -63,18 +65,25 @@ def get_assignments(course):
 
 
 @register.filter
+def roster(course):
+    roster = Takes.objects.filter(course_id=course).exclude(user_level="i").order_by('user_level')
+    return roster
+
+
+@register.filter
+def secondary_instructors(course):
+    instructors = Takes.objects.filter(course_id=course, user_level="i").order_by('username')
+    return instructors
+
+
+@register.filter
 def student_count(course):
-    return Takes.objects.filter(course_id=course).count()
+    return Takes.objects.filter(course_id=course).exclude(user_level="i").count()
 
 
 @register.filter
 def assignment_count(course):
     return Assignment.objects.filter(course_id=course).count()
-
-
-@register.filter
-def student_count(course):
-    return Takes.objects.filter(course_id=course).count()
 
 
 @register.filter

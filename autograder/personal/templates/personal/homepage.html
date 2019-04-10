@@ -66,11 +66,7 @@
                 <span class="small pin-left">CRN {{course.course_crn}}</span>
               </a>
               <small class="small" style="display:block;">
-              {% if request.user|is_secondary_instructor:course %}
-                secondary instructor
-              {% else %}
                 {{ request.user|get_user_course_level:course }}
-              {% endif %}
               </small>
             </h3>
           <div id="collapse{{ course.id }}" class="collapse
