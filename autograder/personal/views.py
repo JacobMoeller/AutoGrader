@@ -207,7 +207,7 @@ def email(request):
 
         if recipient[recipient.find('@'):] != '@potsdam.edu':
             print("The yeast is burbing.")
-        else if User.objects.filter(username = alias).exists():
+        elif User.objects.filter(username = alias).exists():
             print("There's a snake in my boot.")
         else:
             send_mail('Invite to join the Potsdam Autograder',
