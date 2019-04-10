@@ -142,3 +142,12 @@ class EmailPageTest(TestCase):
         response = self.client.get(reverse('email'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'personal/email_form.html')
+
+# Tests for sending emails
+class EmailTest(TestCase):
+    def test_send_email(self):
+        mail.send_mail('Test Email', 'This is a test email.',
+                       'potsdamautograder@gmail.com', ['malonejc200@potsdam.edu'],
+                       fail_silently=False)
+                       self.assertEqual(len(mail.outbox), 1)
+                       self.assertEqual(mail.outbox[0].subject, 'Test Email')
