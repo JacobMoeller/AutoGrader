@@ -1,0 +1,14 @@
+<!--JAKE - TEMPLATE for PROJECT Detailview-->
+{% extends "personal/header.html" %}
+{% include 'base.html' %}
+{% load personal_extras %}
+
+{% block content %}
+  <h1>{{assignment.title}}</h1>
+  <h3>{{assignment.course_id}}</h3>
+  <h2>Assignment Description: {{assignment.assignment_description}}</h2>
+  <h5>Optional Notes: {{assignment.optional_notes}}</h2>
+  <h5>Acceptance Criteria: {{assignment.acceptance_criteria}}</h2>
+  <h5>Testing Criteria: {{assignment.testing_criteria}}</h2>
+  <h2>Due Date: {{assignment.due_on}}</h2>
+{% endblock %}

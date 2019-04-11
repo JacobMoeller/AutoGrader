@@ -28,6 +28,13 @@ urlpatterns = [
         name='course_delete'
         ),
 
+    # JAKE - PATH for Project Detailview
+    path(
+        'course/<int:pk>/<str:title>/',
+        views.assignment_detail,
+        name='assignment_detail'
+        ),
+
     # Invite-based links
     path(
         'course/invite/<int:pk>',

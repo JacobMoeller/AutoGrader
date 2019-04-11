@@ -59,7 +59,7 @@
   {% if course|assignment_count %}
   <ul>
     {% for assignment in course|get_assignments %}
-    <li><a href="{{ assignment.get_absolute_url }}">{{ assignment.title }}</a> -- {{ assignment.due_on }}</li>
+    <li><a href="{{ assignment.title }}">{{ assignment.title }}</a> -- {{ assignment.due_on }}</li>
     {% endfor %}
   </ul>
   {% else %}

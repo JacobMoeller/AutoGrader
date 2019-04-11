@@ -1,4 +1,4 @@
-from personal.models import Invite, Courses, Takes
+from personal.models import Invite, Courses, Takes, Assignment
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -255,3 +255,20 @@ def email(request):
 
     return render(request, 'personal/email_form.html')
 # Alex :: April 9th, 2019
+
+
+# JAKE - ASSIGNMENTS #################################################################
+@login_required()
+def assignment_detail(request, pk, title):
+    try:
+        course = Courses.objects.get(pk=pk)
+    except Courses.DoesNotExist:
+        raise Http404('Course does not exist.')
+    try:
+       # name = Assignment.objects.append(Assignment.title)
+        assignment = Assignment.objects.get(title=title)
+    except Assignment.DoesNotExist:
+        raise Http404('Assignment does not exist.')
+        
+    return render(request, 'personal/assignment_detail.html', {'assignment': assignment})
+
